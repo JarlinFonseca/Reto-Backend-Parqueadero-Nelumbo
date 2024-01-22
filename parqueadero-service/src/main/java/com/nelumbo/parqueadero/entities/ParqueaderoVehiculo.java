@@ -39,7 +39,7 @@ public class ParqueaderoVehiculo {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "parqueadero_id", nullable = false)
-    private Parqueadero parqueadnero;
+    private Parqueadero parqueadero;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)

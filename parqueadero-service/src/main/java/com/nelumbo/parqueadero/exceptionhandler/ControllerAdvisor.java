@@ -65,6 +65,22 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "No data found for the requested petition";
                 break;
+            case "class com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException":
+                messageError = "mensaje";
+                messageException = "El usuario autenticado no es SOCIO del parqueadero";
+                break;
+            case "class com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException":
+                messageError = "mensaje";
+                messageException = "El parqueadero ya esta lleno, la cantidad de vehiculos limite ha sido superada";
+                break;
+            case "class com.nelumbo.parqueadero.exception.VehiculoExisteException":
+                messageError = "mensaje";
+                messageException = "No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero";
+                break;
+            case "class com.nelumbo.parqueadero.exception.VehiculoNoExisteException":
+                messageError = "mensaje";
+                messageException = "No se puede Registrar Salida, no existe la placa en el parqueadero";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

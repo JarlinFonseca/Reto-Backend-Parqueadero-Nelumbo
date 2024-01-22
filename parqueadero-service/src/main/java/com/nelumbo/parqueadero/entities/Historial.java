@@ -44,6 +44,6 @@ public class Historial {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "parqueaderos_vehiculos_id", nullable = false)
+    @JoinColumn(name = "parqueadero_vehiculo_id", nullable = false)
     private ParqueaderoVehiculo parqueaderoVehiculo;
 }
