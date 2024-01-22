@@ -3,13 +3,17 @@ package com.nelumbo.parqueadero.services.impl;
 import com.nelumbo.parqueadero.dto.request.IngresoVehiculoParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.request.SalidaVehiculoParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.response.IngresoVehiculoParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
 import com.nelumbo.parqueadero.dto.response.SalidaVehiculoParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
 import com.nelumbo.parqueadero.entities.Historial;
 import com.nelumbo.parqueadero.entities.Parqueadero;
 import com.nelumbo.parqueadero.entities.ParqueaderoVehiculo;
 import com.nelumbo.parqueadero.entities.Vehiculo;
 import com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException;
 import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
+import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
+import com.nelumbo.parqueadero.exception.ParqueaderoVacioException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.exception.VehiculoExisteException;
 import com.nelumbo.parqueadero.exception.VehiculoNoExisteException;
@@ -27,6 +31,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -105,6 +111,28 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     @Override
     public ParqueaderoVehiculo obtenerParqueaderoVehiculoPorIdYFlagVehiculoActivo(Long id, Boolean flag) {
         return parqueaderoVehiculoRepository.findByVehiculo_idAndFlagIngresoActivo(id, flag).orElse(null);
+    }
+
+    @Override
+    public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueadosPorIdParqueadero(Long parqueaderoId) {
+        if(Boolean.FALSE.equals(parqueaderoService.verificarExistenciaParqueadero(parqueaderoId))) throw new ParqueaderoNoExisteException();
+        List<ParqueaderoVehiculo> parqueaderoVehiculos = parqueaderoVehiculoRepository.findAllByParqueadero_idAndFlagIngresoActivo(parqueaderoId,true).orElseThrow();
+        if( parqueaderoVehiculos.isEmpty()) throw new ParqueaderoVacioException();
+
+        return parqueaderoVehiculos.stream().
+                map(parqueaderoVehiculo -> {
+            VehiculoParqueadoResponseDto vehiculoParqueadoResponseDto = new VehiculoParqueadoResponseDto();
+            vehiculoParqueadoResponseDto.setId(parqueaderoVehiculo.getId());
+            vehiculoParqueadoResponseDto.setPlaca(parqueaderoVehiculo.getVehiculo().getPlaca());
+            vehiculoParqueadoResponseDto.setFechaIngreso(parqueaderoVehiculo.getFechaIngreso());
+            return vehiculoParqueadoResponseDto;
+        }).collect(Collectors.toList()) ;
+    }
+
+    @Override
+    public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueaderosAsociadosPorId(Long parqueaderoId) {
+        verificarSocioAutenticado(parqueaderoId);
+        return obtenerVehiculosParqueadosPorIdParqueadero(parqueaderoId);
     }
 
     private Long verificarSocioAutenticado(Long parqueaderoId){

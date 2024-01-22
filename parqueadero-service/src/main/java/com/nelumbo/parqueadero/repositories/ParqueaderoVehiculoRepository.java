@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,6 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
     Long getCountVehiculosParqueadero(Long parqueaderoId);
 
     Optional<ParqueaderoVehiculo> findByVehiculo_idAndFlagIngresoActivo(Long vehiculoId, Boolean flagIngresoActivo);
+
+    Optional<List<ParqueaderoVehiculo>> findAllByParqueadero_idAndFlagIngresoActivo(Long parqueaderoId, Boolean flagIngresoActivo);
 }

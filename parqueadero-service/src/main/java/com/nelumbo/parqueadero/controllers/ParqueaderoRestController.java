@@ -2,6 +2,7 @@ package com.nelumbo.parqueadero.controllers;
 
 import com.nelumbo.parqueadero.dto.request.ParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.ParqueaderoSocioResponseDto;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,5 +61,10 @@ public class ParqueaderoRestController {
         return "El parqueadero con ID: "+id+" ha sido eliminado correctamente.";
     }
 
+    @GetMapping("/listarParqueaderosAsociados")
+    @PreAuthorize("hasAuthority('SOCIO')")
+    public ResponseEntity<List<ParqueaderoSocioResponseDto>> listarParqueaderosSocios(){
+        return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.listarParqueaderosSocio());
+    }
 
 }

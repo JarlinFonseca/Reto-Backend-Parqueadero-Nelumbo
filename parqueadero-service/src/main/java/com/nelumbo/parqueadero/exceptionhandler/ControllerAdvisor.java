@@ -81,6 +81,14 @@ public class ControllerAdvisor {
                 messageError = "mensaje";
                 messageException = "No se puede Registrar Salida, no existe la placa en el parqueadero";
                 break;
+            case "class com.nelumbo.parqueadero.exception.ParqueaderoVacioException":
+                messageError = "mensaje";
+                messageException = "El parqueadero esta vació, no tiene vehiculos";
+                break;
+            case "class com.nelumbo.parqueadero.exception.SocioNoTieneParqueaderosException":
+                messageError = "mensaje";
+                messageException = "El socio no tiene parqueaderos asociados.";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));
