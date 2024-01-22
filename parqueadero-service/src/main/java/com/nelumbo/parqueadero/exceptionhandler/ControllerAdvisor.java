@@ -34,4 +34,42 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleException(Exception exception) {
+        System.out.println("llega Excepcion:"+exception.getClass().toString());
+        String messageError = "";
+        String messageException = "";
+        switch (exception.getClass().toString()) {
+            case "class com.nelumbo.parqueadero.exception.NoExisteParqueaderosException":
+                messageError = "mensaje";
+                messageException = "No existen parqueaderos guardados";
+                break;
+            case "class com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException":
+                messageError = "mensaje";
+                messageException = "El parqueadero no existe";
+                break;
+            case "class com.nelumbo.parqueadero.exception.UsuarioDebeSerRolSocioException":
+                messageError = "mensaje";
+                messageException = "El usuario autenticado debe ser rol SOCIO";
+                break;
+            case "class com.nelumbo.parqueadero.exception.UsuarioNoExisteException":
+                messageError = "mensaje";
+                messageException = "El usuario con rol SOCIO no existe";
+                break;
+            case "class com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException":
+                messageError = "mensaje";
+                messageException = "El usuario SOCIO no se ha autenticado";
+                break;
+            case "class com.pragma.powerup.domain.exception.NoDataFoundException":
+                messageError = "Message Error";
+                messageException = "No data found for the requested petition";
+                break;
+            default:
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));
+
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(messageError, messageException));
+    }
 }
