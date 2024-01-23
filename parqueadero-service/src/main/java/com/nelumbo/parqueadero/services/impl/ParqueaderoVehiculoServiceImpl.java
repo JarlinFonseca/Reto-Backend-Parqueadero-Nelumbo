@@ -2,6 +2,7 @@ package com.nelumbo.parqueadero.services.impl;
 
 import com.nelumbo.parqueadero.dto.request.IngresoVehiculoParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.request.SalidaVehiculoParqueaderoRequestDto;
+import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoResponseDto;
 import com.nelumbo.parqueadero.dto.response.IngresoVehiculoParqueaderoResponseDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
 import com.nelumbo.parqueadero.dto.response.SalidaVehiculoParqueaderoResponseDto;
@@ -12,14 +13,15 @@ import com.nelumbo.parqueadero.entities.ParqueaderoVehiculo;
 import com.nelumbo.parqueadero.entities.Vehiculo;
 import com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException;
 import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
+import com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistrados;
 import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.ParqueaderoVacioException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.exception.VehiculoExisteException;
 import com.nelumbo.parqueadero.exception.VehiculoNoExisteException;
-import com.nelumbo.parqueadero.repositories.HistorialRepository;
 import com.nelumbo.parqueadero.repositories.ParqueaderoRepository;
 import com.nelumbo.parqueadero.repositories.ParqueaderoVehiculoRepository;
+import com.nelumbo.parqueadero.services.IHistorialService;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
 import com.nelumbo.parqueadero.services.IParqueaderoVehiculoService;
 import com.nelumbo.parqueadero.services.IToken;
@@ -40,9 +42,9 @@ import java.util.stream.Collectors;
 public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoService {
     private final IParqueaderoService parqueaderoService;
     private final IVehiculoService vehiculoService;
+    private final IHistorialService historialService;
     private final ParqueaderoVehiculoRepository parqueaderoVehiculoRepository;
     private final ParqueaderoRepository parqueaderoRepository;
-    private final HistorialRepository historialRepository;
     private final IToken token;
 
     @Override
@@ -95,7 +97,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         parqueaderoVehiculoRepository.save(parqueaderoVehiculo);
 
         historial.setParqueaderoVehiculo(parqueaderoVehiculo);
-        historialRepository.save(historial);
+        historialService.guardarHistorial(historial);
 
         return new SalidaVehiculoParqueaderoResponseDto("Salida registrada");
     }
@@ -133,6 +135,37 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueaderosAsociadosPorId(Long parqueaderoId) {
         verificarSocioAutenticado(parqueaderoId);
         return obtenerVehiculosParqueadosPorIdParqueadero(parqueaderoId);
+    }
+
+    @Override
+    public List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez() {
+        List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez().orElseThrow();
+        if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
+        return vehiculos.stream().map(vehiculosParqueadero ->{
+            IndicadorVehiculosMasVecesRegistradoResponseDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoResponseDto();
+            Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(Long.parseLong(vehiculosParqueadero[0].toString()));
+            ParqueaderoResponseDto parqueadero= parqueaderoService.obtenerParqueaderoPorId(Long.parseLong(vehiculosParqueadero[1].toString()));
+            vehiculosMasVecesRegistradoResponseDto.setNombreParqueadero(parqueadero.getNombre());
+            vehiculosMasVecesRegistradoResponseDto.setVehiculo(vehiculo);
+            vehiculosMasVecesRegistradoResponseDto.setCantidadVecesRegistrado(Long.parseLong(vehiculosParqueadero[2].toString()));
+            return vehiculosMasVecesRegistradoResponseDto;
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(Long parqueaderoId) {
+        List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(parqueaderoId).orElseThrow();
+        if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
+
+        return vehiculos.stream().map(vehiculosParqueadero ->{
+            IndicadorVehiculosMasVecesRegistradoResponseDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoResponseDto();
+            Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(Long.parseLong(vehiculosParqueadero[0].toString()));
+            ParqueaderoResponseDto parqueadero= parqueaderoService.obtenerParqueaderoPorId(Long.parseLong(vehiculosParqueadero[1].toString()));
+            vehiculosMasVecesRegistradoResponseDto.setNombreParqueadero(parqueadero.getNombre());
+            vehiculosMasVecesRegistradoResponseDto.setVehiculo(vehiculo);
+            vehiculosMasVecesRegistradoResponseDto.setCantidadVecesRegistrado(Long.parseLong(vehiculosParqueadero[2].toString()));
+            return vehiculosMasVecesRegistradoResponseDto;
+        }).collect(Collectors.toList());
     }
 
     private Long verificarSocioAutenticado(Long parqueaderoId){

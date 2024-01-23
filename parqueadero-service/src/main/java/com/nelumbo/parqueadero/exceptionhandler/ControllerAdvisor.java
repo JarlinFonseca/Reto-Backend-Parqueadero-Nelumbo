@@ -89,6 +89,10 @@ public class ControllerAdvisor {
                 messageError = "mensaje";
                 messageException = "El socio no tiene parqueaderos asociados.";
                 break;
+            case "class com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistrados":
+                messageError = "mensaje";
+                messageException = "No existen vehiculos registrados";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

@@ -18,4 +18,19 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
     Optional<ParqueaderoVehiculo> findByVehiculo_idAndFlagIngresoActivo(Long vehiculoId, Boolean flagIngresoActivo);
 
     Optional<List<ParqueaderoVehiculo>> findAllByParqueadero_idAndFlagIngresoActivo(Long parqueaderoId, Boolean flagIngresoActivo);
+
+    @Query(nativeQuery = true, value = "SELECT vehiculo_id, parqueadero_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
+            "FROM parqueaderos_vehiculos " +
+            "GROUP BY vehiculo_id, parqueadero_id " +
+            "ORDER BY cantidadVecesRegistrado DESC " +
+            "LIMIT 10")
+    Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez();
+
+    @Query(nativeQuery = true, value = "SELECT vehiculo_id, parqueadero_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
+            "FROM parqueaderos_vehiculos " +
+            "WHERE parqueadero_id = :parqueaderoId " +
+            "GROUP BY vehiculo_id, parqueadero_id " +
+            "ORDER BY cantidadVecesRegistrado DESC " +
+            "LIMIT 10")
+    Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(Long parqueaderoId);
 }
