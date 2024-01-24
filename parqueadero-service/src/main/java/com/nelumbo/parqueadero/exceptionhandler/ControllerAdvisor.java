@@ -93,6 +93,10 @@ public class ControllerAdvisor {
                 messageError = "mensaje";
                 messageException = "No existen vehiculos registrados";
                 break;
+            case "class com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistradosPorPrimeraVez":
+                messageError = "mensaje";
+                messageException = "No hay vehiculos parqueados que esten por primera vez en este parqueadero";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

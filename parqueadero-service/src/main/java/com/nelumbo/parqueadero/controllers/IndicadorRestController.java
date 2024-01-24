@@ -1,6 +1,7 @@
 package com.nelumbo.parqueadero.controllers;
 
 import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoResponseDto;
+import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
 import com.nelumbo.parqueadero.services.IHistorialService;
 import com.nelumbo.parqueadero.services.IParqueaderoVehiculoService;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,11 @@ public class IndicadorRestController {
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
     public ResponseEntity<List<IndicadorVehiculosMasVecesRegistradoResponseDto>> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(@PathVariable(name="id")Long parqueaderoId){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosMasVecesRegistradosParqueaderoPorId(parqueaderoId));
+    }
+
+    @GetMapping("/vehiculosParqueadosPrimeraVez/parqueadero/{id}")
+    @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
+    public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerVehiculosParqueadosPrimeraVezPorParqueaderoId(@PathVariable(name = "id")Long parqueaderoId){
+        return ResponseEntity.ok(historialService.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId));
     }
 }
