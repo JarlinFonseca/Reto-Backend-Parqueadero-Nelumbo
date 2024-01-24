@@ -97,6 +97,10 @@ public class ControllerAdvisor {
                 messageError = "mensaje";
                 messageException = "No hay vehiculos parqueados que esten por primera vez en este parqueadero";
                 break;
+            case "class com.nelumbo.parqueadero.exception.NoHayCoincidenciasPlacaException":
+                messageError = "mensaje";
+                messageException = "No hay coincidencias de placas de vehiculos de acuerdo a lo ingresado.";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

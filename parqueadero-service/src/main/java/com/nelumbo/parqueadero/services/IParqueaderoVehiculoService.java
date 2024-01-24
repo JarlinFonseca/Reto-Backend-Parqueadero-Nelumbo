@@ -22,5 +22,6 @@ public interface IParqueaderoVehiculoService {
     List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez();
 
     List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(Long parqueaderoId);
+    List<VehiculoParqueadoResponseDto> buscarVehiculoPorCoincidenciaPlaca(String placa);
 
 }

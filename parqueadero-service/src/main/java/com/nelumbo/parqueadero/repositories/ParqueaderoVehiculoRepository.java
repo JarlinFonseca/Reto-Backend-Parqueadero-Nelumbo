@@ -35,8 +35,6 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
     Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(Long parqueaderoId);
 
 
-
-
     @Query(nativeQuery = true, value = "SELECT parqueadero_id, vehiculo_id, fecha_ingreso  FROM parqueaderos_vehiculos " +
             "WHERE parqueadero_id =?1 AND " +
             "vehiculo_id NOT in(select pv.vehiculo_id  from historial h join parqueaderos_vehiculos pv on(h.parqueadero_vehiculo_id=pv.id) " +
@@ -46,4 +44,11 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
             "GROUP BY vehiculo_id " +
             "HAVING COUNT(vehiculo_id) = 1);")
     Optional<List<Object[]>> obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(Long parqueaderoId);
+
+
+    @Query(value = "SELECT pv.id, v.placa, pv.fecha_ingreso " +
+            "FROM parqueaderos_vehiculos pv JOIN vehiculos v " +
+            "ON (pv.vehiculo_id=v.id) " +
+            "WHERE pv.flag_ingreso_activo=true AND v.placa like %:placa%", nativeQuery = true)
+    Optional<List<Object[]>> getVehiculosParqueadosPorCoincidencia(String placa);
 }

@@ -1,5 +1,6 @@
 package com.nelumbo.parqueadero.controllers;
 
+import com.nelumbo.parqueadero.dto.response.GananciasResponseDto;
 import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoResponseDto;
 import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
 import com.nelumbo.parqueadero.services.IHistorialService;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("api/v1/indicador")
 @RequiredArgsConstructor
 public class IndicadorRestController {
+
     private final IParqueaderoVehiculoService parqueaderoVehiculoService;
     private final IHistorialService historialService;
 
@@ -37,5 +39,17 @@ public class IndicadorRestController {
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
     public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerVehiculosParqueadosPrimeraVezPorParqueaderoId(@PathVariable(name = "id")Long parqueaderoId){
         return ResponseEntity.ok(historialService.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId));
+    }
+
+    @GetMapping("/obtenerGanancias/parqueadero/{id}")
+    @PreAuthorize("hasAuthority('SOCIO')")
+    public ResponseEntity<GananciasResponseDto> obtenerGanancias(@PathVariable(name="id")Long parqueaderoId){
+        return ResponseEntity.ok(historialService.obtenerGanancias(parqueaderoId));
+    }
+
+    @GetMapping("/buscarCoincidencia/placa/{placa}")
+    @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
+    public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerGanancias(@PathVariable(name = "placa") String placa){
+        return ResponseEntity.ok(parqueaderoVehiculoService.buscarVehiculoPorCoincidenciaPlaca(placa));
     }
 }

@@ -14,11 +14,14 @@ import com.nelumbo.parqueadero.entities.Vehiculo;
 import com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException;
 import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
 import com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistrados;
+import com.nelumbo.parqueadero.exception.NoHayCoincidenciasPlacaException;
 import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.ParqueaderoVacioException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.exception.VehiculoExisteException;
 import com.nelumbo.parqueadero.exception.VehiculoNoExisteException;
+import com.nelumbo.parqueadero.feignclients.CorreoFeignClients;
+import com.nelumbo.parqueadero.feignclients.dto.request.MensajeRequestDto;
 import com.nelumbo.parqueadero.repositories.ParqueaderoRepository;
 import com.nelumbo.parqueadero.repositories.ParqueaderoVehiculoRepository;
 import com.nelumbo.parqueadero.services.IHistorialService;
@@ -46,6 +49,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     private final ParqueaderoVehiculoRepository parqueaderoVehiculoRepository;
     private final ParqueaderoRepository parqueaderoRepository;
     private final IToken token;
+    private final CorreoFeignClients correoFeignClients;
 
     @Override
     public IngresoVehiculoParqueaderoResponseDto registrarIngreso(IngresoVehiculoParqueaderoRequestDto ingresoVehiculoParqueaderoRequestDto) {
@@ -67,7 +71,18 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         IngresoVehiculoParqueaderoResponseDto ingresoVehiculoParqueaderoResponseDto = new IngresoVehiculoParqueaderoResponseDto();
         ingresoVehiculoParqueaderoResponseDto.setId(vehiculo.getId());
 
+        correoFeignClients.enviarCorreo(guardarDatosMensaje(vehiculo,parqueadero));
+
         return ingresoVehiculoParqueaderoResponseDto;
+    }
+
+    private MensajeRequestDto guardarDatosMensaje(Vehiculo vehiculo, Parqueadero parqueadero){
+        MensajeRequestDto mensajeRequestDto= new MensajeRequestDto();
+        mensajeRequestDto.setMensaje("Vehiculo parqueado correctamente");
+        mensajeRequestDto.setEmail(parqueadero.getUsuario().getCorreo());
+        mensajeRequestDto.setParqueaderoNombre(parqueadero.getNombre());
+        mensajeRequestDto.setPlaca(vehiculo.getPlaca());
+        return mensajeRequestDto;
     }
 
     @Override
@@ -165,6 +180,22 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
             vehiculosMasVecesRegistradoResponseDto.setVehiculo(vehiculo);
             vehiculosMasVecesRegistradoResponseDto.setCantidadVecesRegistrado(Long.parseLong(vehiculosParqueadero[2].toString()));
             return vehiculosMasVecesRegistradoResponseDto;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VehiculoParqueadoResponseDto> buscarVehiculoPorCoincidenciaPlaca(String placa) {
+        List<Object[]> vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidencia(placa).orElseThrow();
+        if(vehiculos.isEmpty()) throw new NoHayCoincidenciasPlacaException();
+
+        return vehiculos.stream().map(vehiculo ->{
+            VehiculoParqueadoResponseDto vehiculoParqueadoResponseDto = new VehiculoParqueadoResponseDto();
+            ParqueaderoVehiculo parqueaderoVehiculo= parqueaderoVehiculoRepository.findById(Long.parseLong(vehiculo[0].toString())).orElseThrow();
+            vehiculoParqueadoResponseDto.setId(parqueaderoVehiculo.getId());
+            vehiculoParqueadoResponseDto.setPlaca(vehiculo[1].toString());
+            vehiculoParqueadoResponseDto.setFechaIngreso(parqueaderoVehiculo.getFechaIngreso());
+            return  vehiculoParqueadoResponseDto;
+
         }).collect(Collectors.toList());
     }
 
