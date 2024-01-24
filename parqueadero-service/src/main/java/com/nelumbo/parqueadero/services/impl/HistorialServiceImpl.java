@@ -11,7 +11,6 @@ import com.nelumbo.parqueadero.repositories.HistorialRepository;
 import com.nelumbo.parqueadero.repositories.ParqueaderoVehiculoRepository;
 import com.nelumbo.parqueadero.services.IHistorialService;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
-import com.nelumbo.parqueadero.services.IParqueaderoVehiculoService;
 import com.nelumbo.parqueadero.services.IToken;
 import com.nelumbo.parqueadero.services.IVehiculoService;
 import lombok.RequiredArgsConstructor;

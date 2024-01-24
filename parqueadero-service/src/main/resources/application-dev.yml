@@ -1,14 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/parqueadero
-    username: postgres
-    password: admin
+    url: ${URL_DB}
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
-      ddl-auto: update
-      #ddl-auto: create
+      ddl-auto: ${DDL_AUTO}
     show-sql: true
 
 ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}

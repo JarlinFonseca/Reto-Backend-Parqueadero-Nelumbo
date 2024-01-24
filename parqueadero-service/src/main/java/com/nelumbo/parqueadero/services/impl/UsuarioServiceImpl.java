@@ -9,7 +9,6 @@ import com.nelumbo.parqueadero.repositories.UsuarioRepository;
 import com.nelumbo.parqueadero.services.IRolService;
 import com.nelumbo.parqueadero.services.IUsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
