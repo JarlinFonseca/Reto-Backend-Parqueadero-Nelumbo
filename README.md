@@ -152,11 +152,11 @@ Luego que ambos microservicios se esten ejecutando, importas la colección de Po
 
 NOTA: es importante que ambos corran para que no tenga errores, ya que el parqueadero usa una funcionalidad del correo.
 
-##### 8. Siempre debe loguearse para poder acceder a los demas endpoints
-Al momento de probar las funcionalidades debe hacer login como ADMIN o SOCIO, depende de lo que vaya a probar para poder generar el token JWT y ese token lo pega en el apartado de Postman en Authorization->Bearer Token->Token o en Headers agregasen Key: Authorization y en Value: Bearer tokenJWT.
+##### 8. Siempre debe loguearse para poder acceder a los demás endpoints
+Al momento de probar las funcionalidades debe hacer login como ADMIN o SOCIO, depende de lo que vaya a probar para poder generar el token JWT y ese token lo pega en el apartado de Postman en Authorization->Bearer Token->Token o en Headers agregas en Key: Authorization y en Value: Bearer tokenJWT.
 
 ##### Ejemplo:
-Nos logueamos como ADMIN
+Nos logueamos como ADMIN:
 
 ![Login ADMIN](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/03f9fdb7-1a4d-4189-9a7e-8f17c05b458f)
 
