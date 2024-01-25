@@ -49,7 +49,7 @@ ___
 
 - [IntelliJ IDEA Community](https://www.jetbrains.com/idea/download/ "IntelliJ IDEA Community")
 - [Postman](https://www.postman.com/ "Postman")
-- [DBeaver Community]([https://www.postgresql.org/](https://dbeaver.io/) "DBeaver Community")
+- [DBeaver Community](https://dbeaver.io/ "DBeaver Community")
 
 ___
 
