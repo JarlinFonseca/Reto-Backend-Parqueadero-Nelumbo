@@ -167,7 +167,7 @@ Copiamos el token JWT, y nos vamos al endpoint que vamos a probar, por ejemplo l
 Y de esta forma sería la segunda opción de agregar el token JWT:
 ![explicacion tokenJWT2](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/2352ff6c-ace1-4d4f-a7e0-fd76c0804e72)
 
-NOTA: Cualquiera de estas dos opciónes puedes usar, ya que es necesario Autenticarse(Hacer el Login) el cual genera un token JWT y luego Autorizar los enpoints de acuerdo a los Roles(ADMIN o SOCIO) con sus permisos. 
+NOTA: Cualquiera de estas dos opciónes puedes usar, ya que es necesario Autenticarse(Hacer el Login) el cual genera un token JWT y luego Autorizar los endpoints de acuerdo a los Roles(ADMIN o SOCIO) con sus permisos. 
 
 ___
 
