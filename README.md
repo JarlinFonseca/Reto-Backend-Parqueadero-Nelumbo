@@ -6,9 +6,9 @@
 1. [Descripción](#descripción)
 2. [Tecnologías](#tecnologías)
 3. [Modelo Relacional BD](#modelo-relacional-bd)
-4. [Requisitos](#ide)
-5. [Herramientas Recomendadas](#)
-6. [Instalación y Uso](#instalación)
+4. [Requisitos](#requisitos)
+5. [Herramientas Recomendadas](#herramientas-recomendadas)
+6. [Instalación y Uso](#instalación-y-uso)
 7. [Autor](#autor)
 
 
@@ -44,51 +44,113 @@ ___
 - [Git](https://git-scm.com/ "Git")
 
 ___
+
+### Herramientas Recomendadas:
+
+- [IntelliJ IDEA Community](https://www.jetbrains.com/idea/download/ "IntelliJ IDEA Community")
+- [Postman](https://www.postman.com/ "Postman")
+- [DBeaver Community]([https://www.postgresql.org/](https://dbeaver.io/) "DBeaver Community")
+
+___
+
+
 ### Instalación y Uso:
 
 
-#### Pasos de instalación y Uso
-
-##### 1. Clonar el repositorio del proyecto en Laravel
-Para clonar el proyecto abre una terminal o consola de comandos y escribe la siguiente nomenclatura, esto es después de la instrucción git clone agrega tu dirección:
+##### 1. Clonar el repositorio del proyecto
+Para clonar el proyecto abre una terminal o consola de comandos y escribe el siguiente comando, esto es después de la instrucción git clone agrega la dirección GitHub:
 
 ```sh
-git clone https://github.com/JarlinFonseca/SAGIS.git
+git clone https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo.git
 ```
 
-##### 2. Instalar dependencias del proyecto
-Cuando guardas tu proyecto Laravel en un repositorio GIT, en el archivo .gitignore se excluye la carpeta vendor que es donde están las librerías que usa tu proyecto, es por eso que se debe correr en la terminal una instrucción que tome del archivo composer.json todas las referencias de las librerías que deben estar instaladas en tu proyecto.
+##### 2. Crear dos base de datos para los dos microservicios
+Crear dos base de datos local en PostgreSQL:
+- La primera de nombre "parqueadero" para el microservicio de parqueadero-service.
+- La segunda de nombre "correo" para el microservicio de correo-service.
 
-Ingresa desde la terminal a la carpeta del proyecto SAGIS y escribe:
+![BD local](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/b25228f5-2055-4ae1-89b4-6f4b3fd292e2)
+
+
+##### 3.Abrir las dos carpetas de los microservicios de forma independiente en el IDE
+Luego de crear las base de datos en local, se abren las carpetas de ambos microservicios de forma independiente de preferencia en el IDE de IntelliJ IDEA Community y se le da en el botón de "Trust project", ambos proyectos abrirán, y empezaran a descargar las dependencias internamente.
+
+![carpetas proyecto](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/504659be-44dc-4adb-83d3-3bd0d76226d9)
+
+
+##### 4. Configurar variables de entorno en el microservicio de parqueadero
+Nos vamos al microservicio del parqueadero, en la estructura del proyecto nos ubicamos en src/main/resources/application-dev.yml y encontrarás las propiedades y variables de entorno(ENV), tienes que agregar los valores de las ENV en el IDE que son las siguientes (ejemplo con los datos que agregue con mi configuración de BD local):
+
+- URL_DB : jdbc:postgresql://localhost:5432/parqueadero
+- USERNAME_DB: postgres
+- PASSWORD_DB: admin
+- DDL_AUTO: create(Si es la primera vez que abres el proyecto) o update(cuando ya se ha importado el import.sql y creado las tablas en la BD)
+  #### NOTA: En la propiedad de spring.jpa.hibernate.ddl-auto, en el ${DDL_AUTO} si es la primera vez que abre el proyecto debe colocar "create" para que le importe los datos en la BD y se creen las tablas sin ningún problema, ya cuando se importen los datos y las tablas esten creadas, cambias el valor de la variable de entorno ${DDL_AUTO} en "update".
+- ACCESS_TOKEN_SECRET: (codigo muy secreto ej: VEVFZ1EwOU9WRkpC) : en este apartado agregas un código secreto tuyo que no debe saber nadie, y es necesario para firmar el token JWT y tener siempre segura la API.
+
+Valores de Variables de Entorno en IntelliJ IDEA Community (Parqueadero)
+
+![ENV parqueadero](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/a7747b73-c8f9-40e6-b5d7-4f147494f026)
+
+
 
 ```sh
-composer install
-```
-Este comando instalará todas las librerías que están declaradas para tu proyecto.
+-> src/main/resources/application-dev.yml
+spring:
+  datasource:
+    url: ${URL_DB}
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: ${DDL_AUTO}
+    show-sql: true
 
-##### 3. Generar archivo .env
-Por seguridad el archivo .env está excluido del repositorio, para generar uno nuevo se toma como plantilla el archivo .env.example para copiar este archivo en una nuevo escribe en tu terminal:
+ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
+```
+
+
+##### 5. Configurar variables de entorno en el microservicio de correo
+Posteriormente vamos al microservicio de correo, en la estructura del proyecto nos ubicamos en src/main/resources/application-dev.yml y encontrarás las propiedades y variables de entorno(ENV), tienes que agregar los valores de las ENV en el IDE que son las siguientes (ejemplo con los datos que agregue con mi configuración de BD local):
+
+- URL_DB : jdbc:postgresql://localhost:5432/correo
+- USERNAME_DB: postgres
+- PASSWORD_DB: admin
+- DDL_AUTO: create(Si es la primera vez que abres el proyecto) o update(cuando ya se ha importado el import.sql y creado las tablas en la BD)
+  #### NOTA: En la propiedad de spring.jpa.hibernate.ddl-auto, en el ${DDL_AUTO} si es la primera vez que abre el proyecto debe colocar "create" para que le importe los datos en la BD y se creen las tablas sin ningún problema, ya cuando se importen los datos y las tablas esten creadas, cambias el valor de la variable de entorno ${DDL_AUTO}  en "update".
+
+
+Valores de Variables de Entorno en IntelliJ IDEA Community (Correo)
+
+![ENV correo](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/ba0464bc-c982-43cf-8e6c-5391f9f8c416)
+
 
 ```sh
-cp .env.example .env
+-> src/main/resources/application-dev.yml
+spring:
+  datasource:
+    url: ${URL_DB}
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: ${DDL_AUTO}
+    show-sql: true
 ```
 
-##### 4. Generar Key
-Para que el proyecto en Laravel corra sin problemas es necesario generar una key de seguirdad, para ello en tu terminal corre el siguiente comando:
 
-```sh
-php artisan key:generate
-```
-Esta key nueva se agregará a tu archivo .env
+##### 6. Ejecutar ambos microservicios de Parqueadero y Correo
+Como es la primera vez que ejecutas los microservicios y además en el ENV de DDL_AUTO se agrego con "create", entonces poblara toda la data en las tablas de las base de datos de forma correcta en ambos microservicios, luego de revisar que todo este creado correctamente cambias el DDL_AUTO a "update", como lo explique en los pasos anteriores .
 
-##### 5. Crear base de datos (Omitir este paso, si ya has creado la BD)
-Sí tu proyecto en Laravel funciona haciendo consultas a una base de datos entonces tienes que crear una nueva base de datos, la forma más rápida para crearla es desde la terminal:
-```sh
-mysql -u root -p
 
-CREATE DATABASE nombreDeTuDBAqui CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-```
-Para salir de la consola de MySQL solo escribe ‘exit’ y tecla Enter.
+##### 7. Probar las diferentes funcionalidades importando la colección de Postman
+Luego que ambos microservicios se esten ejecutando, importas la colección de Postman que estará en este repositorio para que puedas probar las funcionalidades de ambos microservicios.
+
+NOTA: es importante que ambos corran para que no tenga errores, ya que el parqueadero usa una funcionalidad del correo.
 
 ___
 
