@@ -1,5 +1,7 @@
 package com.nelumbo.parqueadero.security;
 
+import com.nelumbo.parqueadero.entities.Token;
+import com.nelumbo.parqueadero.repositories.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +27,8 @@ public class TokenUtils {
     private String ACCESS_TOKEN_SECRET;
 
     private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 21_600L;
+
+    private final TokenRepository tokenRepository;
 
     public String createToken(String nombre, String email, String rol, Long id){
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS*1_000;
@@ -58,7 +62,11 @@ public class TokenUtils {
 
             return new UsernamePasswordAuthenticationToken(email, null, authorities);
 
-        }catch (JwtException e){
+        }catch (JwtException e) {
+            Token jwt = tokenRepository.findByToken(token).orElseThrow();
+            jwt.setExpired(true);
+            jwt.setRevoked(true);
+            tokenRepository.save(jwt);
             return null;
         }
 

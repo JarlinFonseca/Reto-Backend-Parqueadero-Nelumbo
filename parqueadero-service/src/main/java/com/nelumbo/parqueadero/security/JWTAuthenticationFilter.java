@@ -3,6 +3,11 @@ package com.nelumbo.parqueadero.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.nelumbo.parqueadero.dto.response.UsuarioLoginResponseDto;
+import com.nelumbo.parqueadero.entities.Token;
+import com.nelumbo.parqueadero.entities.Usuario;
+import com.nelumbo.parqueadero.enums.TokenType;
+import com.nelumbo.parqueadero.repositories.TokenRepository;
+import com.nelumbo.parqueadero.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +25,8 @@ import java.util.Collections;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final TokenUtils tokenUtils;
+    private final UsuarioRepository usuarioRepository;
+    private final TokenRepository tokenRepository;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -56,6 +63,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 authorities[0].toString(), userDetails.getId());
         response.addHeader("Authorization", "Bearer "+token);
 
+        Usuario usuario= usuarioRepository.findById(userDetails.getId()).orElse(null);
+        revokeAllUserTokens(usuario);
+        saveTokenUser(usuario, token);
+
+
 
         Gson gson = new Gson();
         UsuarioLoginResponseDto usuarioLoginResponseDto= new UsuarioLoginResponseDto();
@@ -70,5 +82,29 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().flush();
 
         super.successfulAuthentication(request, response, chain, authResult);
+    }
+
+
+    private void saveTokenUser(Usuario usuario, String tokenJwt){
+        var token = Token.builder()
+                .usuario(usuario)
+                .token(tokenJwt)
+                .tokenType(TokenType.BEARER)
+                .revoked(false)
+                .expired(false)
+                .build();
+
+        tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(Usuario usuario) {
+        var validUserTokens = tokenRepository.findAllValidTokensByUser(usuario.getId());
+        if(validUserTokens.isEmpty()) return;
+        validUserTokens.forEach(token -> {
+            token.setRevoked(true);
+            token.setExpired(true);
+        });
+
+        tokenRepository.saveAll(validUserTokens);
     }
 }
