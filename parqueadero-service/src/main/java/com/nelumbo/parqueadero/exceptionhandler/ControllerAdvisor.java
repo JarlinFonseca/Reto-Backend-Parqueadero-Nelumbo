@@ -1,6 +1,7 @@
 package com.nelumbo.parqueadero.exceptionhandler;
 
 import com.nelumbo.parqueadero.exception.NoDataFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -25,6 +26,18 @@ public class ControllerAdvisor {
 
             errors.put(fielName, message);
         });
+        return  ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
+        Map<String, String> errors = new HashMap<>();
+        String messageError = "mensaje";
+        String messageException = "Se esta violando una constraint de integridad, debido a que estas ingresando repetido " +
+                "el documentoDeIdentidad o el correo ya que son unicos (UK).";
+        errors.put(messageError, messageException);
+
+
         return  ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
     }
 
