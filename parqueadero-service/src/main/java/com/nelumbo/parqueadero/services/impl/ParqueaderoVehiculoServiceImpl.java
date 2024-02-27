@@ -11,15 +11,7 @@ import com.nelumbo.parqueadero.entities.Historial;
 import com.nelumbo.parqueadero.entities.Parqueadero;
 import com.nelumbo.parqueadero.entities.ParqueaderoVehiculo;
 import com.nelumbo.parqueadero.entities.Vehiculo;
-import com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException;
-import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
-import com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistrados;
-import com.nelumbo.parqueadero.exception.NoHayCoincidenciasPlacaException;
-import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
-import com.nelumbo.parqueadero.exception.ParqueaderoVacioException;
-import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
-import com.nelumbo.parqueadero.exception.VehiculoExisteException;
-import com.nelumbo.parqueadero.exception.VehiculoNoExisteException;
+import com.nelumbo.parqueadero.exception.*;
 import com.nelumbo.parqueadero.feignclients.CorreoFeignClients;
 import com.nelumbo.parqueadero.feignclients.dto.request.MensajeRequestDto;
 import com.nelumbo.parqueadero.repositories.ParqueaderoRepository;
@@ -37,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,6 +85,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         if(!vehiculoService.verificarExistenciaVehiculo(placa)) throw new VehiculoNoExisteException();
         Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorPlaca(placa);
         ParqueaderoVehiculo parqueaderoVehiculo = obtenerParqueaderoVehiculoPorIdYFlagVehiculoActivo(vehiculo.getId(), true);
+        if(!Objects.equals(parqueaderoVehiculo.getParqueadero().getId(), salidaVehiculoParqueaderoRequestDto.getParqueaderoId())) throw new VehiculoNoPerteneceParqueaderoException();
         if(!idSocioAuth.equals(parqueaderoVehiculo.getParqueadero().getUsuario().getId())) throw new NoEsSocioDelParqueaderoException();
         Date fechaSalida = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         Date fechaIngreso = parqueaderoVehiculo.getFechaIngreso();
