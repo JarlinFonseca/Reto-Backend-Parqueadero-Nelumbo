@@ -1,6 +1,8 @@
 package com.nelumbo.parqueadero.exceptionhandler;
 
 import com.nelumbo.parqueadero.exception.NoDataFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,13 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdvisor {
     private static final String MESSAGE = "message";
+    private static final String MESSAGE_ERROR = "mensaje";
+    private static final Logger logger = LoggerFactory.getLogger(ControllerAdvisor.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidateExceptions(MethodArgumentNotValidException ex){
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) ->{
+        ex.getBindingResult().getAllErrors().forEach(error ->{
             String fielName = ((FieldError)error).getField();
             String message = error.getDefaultMessage();
 
@@ -32,10 +36,9 @@ public class ControllerAdvisor {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
         Map<String, String> errors = new HashMap<>();
-        String messageError = "mensaje";
         String messageException = "Se esta violando una constraint de integridad, debido a que estas ingresando repetido " +
                 "el documentoDeIdentidad o el correo ya que son unicos (UK).";
-        errors.put(messageError, messageException);
+        errors.put(MESSAGE_ERROR, messageException);
 
 
         return  ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
@@ -50,68 +53,52 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleException(Exception exception) {
-        System.out.println("llega Excepcion:"+exception.getClass().toString());
-        String messageError = "";
+        logger.info("Llega Excepcion: {}", exception.getClass());
         String messageException = "";
         switch (exception.getClass().toString()) {
             case "class com.nelumbo.parqueadero.exception.VehiculoNoPerteneceParqueaderoException":
-                messageError = "mensaje";
                 messageException = "El vehiculo no pertenece al parqueadero dado.";
                 break;
             case "class com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException":
-                messageError = "mensaje";
                 messageException = "El parqueadero no existe";
                 break;
             case "class com.nelumbo.parqueadero.exception.UsuarioDebeSerRolSocioException":
-                messageError = "mensaje";
                 messageException = "El usuario autenticado debe ser rol SOCIO";
                 break;
             case "class com.nelumbo.parqueadero.exception.UsuarioNoExisteException":
-                messageError = "mensaje";
                 messageException = "El usuario con rol SOCIO no existe";
                 break;
             case "class com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException":
-                messageError = "mensaje";
                 messageException = "El usuario SOCIO no se ha autenticado";
                 break;
             case "class com.pragma.powerup.domain.exception.NoDataFoundException":
-                messageError = "Message Error";
                 messageException = "No data found for the requested petition";
                 break;
             case "class com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException":
-                messageError = "mensaje";
                 messageException = "El usuario autenticado no es SOCIO del parqueadero";
                 break;
             case "class com.nelumbo.parqueadero.exception.CantidadVehiculosLimiteException":
-                messageError = "mensaje";
                 messageException = "El parqueadero ya esta lleno, la cantidad de vehiculos limite ha sido superada";
                 break;
             case "class com.nelumbo.parqueadero.exception.VehiculoExisteException":
-                messageError = "mensaje";
                 messageException = "No se puede Registrar Ingreso, ya existe la placa en este u otro parqueadero";
                 break;
             case "class com.nelumbo.parqueadero.exception.VehiculoNoExisteException":
-                messageError = "mensaje";
                 messageException = "No se puede Registrar Salida, no existe la placa en el parqueadero";
                 break;
             case "class com.nelumbo.parqueadero.exception.ParqueaderoVacioException":
-                messageError = "mensaje";
                 messageException = "El parqueadero esta vació, no tiene vehiculos";
                 break;
             case "class com.nelumbo.parqueadero.exception.SocioNoTieneParqueaderosException":
-                messageError = "mensaje";
                 messageException = "El socio no tiene parqueaderos asociados.";
                 break;
             case "class com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistrados":
-                messageError = "mensaje";
                 messageException = "No existen vehiculos registrados";
                 break;
             case "class com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistradosPorPrimeraVez":
-                messageError = "mensaje";
                 messageException = "No hay vehiculos parqueados que esten por primera vez en este parqueadero";
                 break;
             case "class com.nelumbo.parqueadero.exception.NoHayCoincidenciasPlacaException":
-                messageError = "mensaje";
                 messageException = "No hay coincidencias de placas de vehiculos de acuerdo a lo ingresado.";
                 break;
             default:
@@ -119,6 +106,6 @@ public class ControllerAdvisor {
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));
 
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(messageError, messageException));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(MESSAGE_ERROR, messageException));
     }
 }

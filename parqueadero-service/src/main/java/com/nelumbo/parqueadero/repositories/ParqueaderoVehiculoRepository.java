@@ -60,4 +60,11 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
             "ON (pv.vehiculo_id=v.id) " +
             "WHERE pv.flag_ingreso_activo=true AND v.placa like %:placa%", nativeQuery = true)
     Optional<List<Object[]>> getVehiculosParqueadosPorCoincidencia(String placa);
+
+    @Query(value = "SELECT pv.id, v.placa, pv.fecha_ingreso " +
+            "FROM parqueaderos_vehiculos pv JOIN vehiculos v " +
+            "ON (pv.vehiculo_id=v.id) " +
+            "WHERE pv.flag_ingreso_activo=true AND v.placa like %:placa% " +
+            "and pv.parqueadero_id IN :idsParqueaderos", nativeQuery = true)
+    Optional<List<Object[]>> getVehiculosParqueadosPorCoincidenciaSocio(String placa, List<Long> idsParqueaderos);
 }

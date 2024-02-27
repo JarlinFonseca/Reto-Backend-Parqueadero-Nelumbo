@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -161,7 +158,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
 
     @Override
     public List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(Long parqueaderoId) {
-        if(esRolSocio()){
+        if(Boolean.TRUE.equals(esRolSocio())){
             verificarSocioAutenticado(parqueaderoId);
         }
         List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(parqueaderoId).orElseThrow();
@@ -180,8 +177,17 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
 
     @Override
     public List<VehiculoParqueadoResponseDto> buscarVehiculoPorCoincidenciaPlaca(String placa) {
-        List<Object[]> vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidencia(placa).orElseThrow();
-        if(vehiculos.isEmpty()) throw new NoHayCoincidenciasPlacaException();
+        List<Object[]> vehiculos;
+        if(Boolean.TRUE.equals(esRolSocio())){
+            Long idSocioAuth = obtenerIdUsuarioAutenticado();
+            List<Parqueadero> parqueaderosSocio = parqueaderoRepository.findAllByUsuario_id(idSocioAuth).orElse(null);
+            if(parqueaderosSocio==null || parqueaderosSocio.isEmpty()) throw new NoHayCoincidenciasPlacaException();
+            List<Long> idsParqueaderos = parqueaderosSocio.stream().map(Parqueadero::getId).collect(Collectors.toList());
+             vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidenciaSocio(placa, idsParqueaderos).orElseThrow();
+        }else {
+            vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidencia(placa).orElseThrow();
+        }
+        if (vehiculos.isEmpty()) throw new NoHayCoincidenciasPlacaException();
 
         return vehiculos.stream().map(vehiculo ->{
             VehiculoParqueadoResponseDto vehiculoParqueadoResponseDto = new VehiculoParqueadoResponseDto();
@@ -215,4 +221,5 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
         return token.getUsuarioAutenticadoId(tokenBearer);
     }
+
 }
