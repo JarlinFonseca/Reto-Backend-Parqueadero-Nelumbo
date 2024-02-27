@@ -45,6 +45,8 @@ public class HistorialServiceImpl implements IHistorialService {
 
     @Override
     public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(Long parqueaderoId) {
+        if(Boolean.TRUE.equals(esRolSocio())) verificarSocioAutenticado(parqueaderoId);
+
         List<Object[]> vehiculosPrimeraVez = parqueaderoVehiculoRepository.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId).orElseThrow();
         if(vehiculosPrimeraVez.isEmpty()) throw new NoExistenVehiculosRegistradosPorPrimeraVez();
 
@@ -66,11 +68,7 @@ public class HistorialServiceImpl implements IHistorialService {
 
     @Override
     public GananciasResponseDto obtenerGanancias(Long parqueaderoId) {
-        String tokenBearer = token.getBearerToken();
-        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
-        Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
-        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
-        if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
+        verificarSocioAutenticado(parqueaderoId);
 
         LocalDate fechaActual = LocalDate.now();
         WeekFields weekFields = WeekFields.ISO;
@@ -100,5 +98,20 @@ public class HistorialServiceImpl implements IHistorialService {
         gananciasResponseDto.setAnio("Las ganancias del año de "+anioActual+" son: "+formatoMoneda.format(gananciasAnioActual));
 
         return gananciasResponseDto;
+    }
+
+    private void verificarSocioAutenticado(Long parqueaderoId){
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
+        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
+        if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
+    }
+
+    private Boolean esRolSocio() {
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        String rolSocioAuth = token.getUsuarioAutenticadoRol(tokenBearer);
+        return rolSocioAuth.equals("SOCIO");
     }
 }
