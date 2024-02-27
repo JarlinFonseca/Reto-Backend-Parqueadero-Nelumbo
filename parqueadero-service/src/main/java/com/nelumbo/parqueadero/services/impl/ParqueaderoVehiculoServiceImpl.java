@@ -161,6 +161,9 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
 
     @Override
     public List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(Long parqueaderoId) {
+        if(esRolSocio()){
+            verificarSocioAutenticado(parqueaderoId);
+        }
         List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(parqueaderoId).orElseThrow();
         if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
 
