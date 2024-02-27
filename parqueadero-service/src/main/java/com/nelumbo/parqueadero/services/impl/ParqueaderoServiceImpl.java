@@ -5,7 +5,6 @@ import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoSocioResponseDto;
 import com.nelumbo.parqueadero.entities.Parqueadero;
 import com.nelumbo.parqueadero.entities.Usuario;
-import com.nelumbo.parqueadero.exception.NoExisteParqueaderosException;
 import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.SocioNoTieneParqueaderosException;
 import com.nelumbo.parqueadero.exception.UsuarioDebeSerRolSocioException;
@@ -63,9 +62,6 @@ public class ParqueaderoServiceImpl implements IParqueaderoService {
     @Override
     public List<ParqueaderoResponseDto> listarParqueaderos() {
         List<Parqueadero> parqueaderos = parqueaderoRepository.findAll();
-        if(parqueaderos.isEmpty()) {
-            throw new NoExisteParqueaderosException();
-        }
         return parqueaderoResponseMapper.toResponseList(parqueaderos);
     }
 

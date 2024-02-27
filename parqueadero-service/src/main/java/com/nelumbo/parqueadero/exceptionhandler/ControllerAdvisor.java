@@ -54,10 +54,6 @@ public class ControllerAdvisor {
         String messageError = "";
         String messageException = "";
         switch (exception.getClass().toString()) {
-            case "class com.nelumbo.parqueadero.exception.NoExisteParqueaderosException":
-                messageError = "mensaje";
-                messageException = "No existen parqueaderos guardados";
-                break;
             case "class com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException":
                 messageError = "mensaje";
                 messageException = "El parqueadero no existe";
