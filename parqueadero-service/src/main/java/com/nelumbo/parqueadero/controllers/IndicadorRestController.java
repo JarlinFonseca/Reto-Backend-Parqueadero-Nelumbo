@@ -1,6 +1,7 @@
 package com.nelumbo.parqueadero.controllers;
 
 import com.nelumbo.parqueadero.dto.response.GananciasResponseDto;
+import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto;
 import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoResponseDto;
 import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
 import com.nelumbo.parqueadero.services.IHistorialService;
@@ -25,7 +26,7 @@ public class IndicadorRestController {
 
     @GetMapping("/vehiculosMasVecesRegistradosParqueaderos")
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
-    public ResponseEntity<List<IndicadorVehiculosMasVecesRegistradoResponseDto>> obtenerVehiculosMasVecesRegistradosDiferentesParqueaderos(){
+    public ResponseEntity<List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto>> obtenerVehiculosMasVecesRegistradosDiferentesParqueaderos(){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez());
     }
 

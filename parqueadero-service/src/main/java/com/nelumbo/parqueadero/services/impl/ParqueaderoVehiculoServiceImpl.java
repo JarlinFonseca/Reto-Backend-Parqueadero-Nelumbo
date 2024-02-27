@@ -2,11 +2,7 @@ package com.nelumbo.parqueadero.services.impl;
 
 import com.nelumbo.parqueadero.dto.request.IngresoVehiculoParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.request.SalidaVehiculoParqueaderoRequestDto;
-import com.nelumbo.parqueadero.dto.response.IndicadorVehiculosMasVecesRegistradoResponseDto;
-import com.nelumbo.parqueadero.dto.response.IngresoVehiculoParqueaderoResponseDto;
-import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
-import com.nelumbo.parqueadero.dto.response.SalidaVehiculoParqueaderoResponseDto;
-import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
+import com.nelumbo.parqueadero.dto.response.*;
 import com.nelumbo.parqueadero.entities.Historial;
 import com.nelumbo.parqueadero.entities.Parqueadero;
 import com.nelumbo.parqueadero.entities.ParqueaderoVehiculo;
@@ -27,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -147,16 +144,17 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     }
 
     @Override
-    public List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez() {
-        List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez().orElseThrow();
+    public List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez() {
+        List<Object[]> vehiculos;
+        if(esRolSocio()) vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezSocio(obtenerIdUsuarioAutenticado()).orElseThrow();
+        else vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezAdmin().orElseThrow();
+
         if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
         return vehiculos.stream().map(vehiculosParqueadero ->{
-            IndicadorVehiculosMasVecesRegistradoResponseDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoResponseDto();
+            IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto();
             Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(Long.parseLong(vehiculosParqueadero[0].toString()));
-            ParqueaderoResponseDto parqueadero= parqueaderoService.obtenerParqueaderoPorId(Long.parseLong(vehiculosParqueadero[1].toString()));
-            vehiculosMasVecesRegistradoResponseDto.setNombreParqueadero(parqueadero.getNombre());
             vehiculosMasVecesRegistradoResponseDto.setVehiculo(vehiculo);
-            vehiculosMasVecesRegistradoResponseDto.setCantidadVecesRegistrado(Long.parseLong(vehiculosParqueadero[2].toString()));
+            vehiculosMasVecesRegistradoResponseDto.setCantidadVecesRegistrado(Long.parseLong(vehiculosParqueadero[1].toString()));
             return vehiculosMasVecesRegistradoResponseDto;
                 }).collect(Collectors.toList());
     }
@@ -200,5 +198,18 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
         if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
         return idSocioAuth;
+    }
+
+    private Boolean esRolSocio() {
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        String rolSocioAuth = token.getUsuarioAutenticadoRol(tokenBearer);
+        return rolSocioAuth.equals("SOCIO");
+    }
+
+    private Long obtenerIdUsuarioAutenticado(){
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        return token.getUsuarioAutenticadoId(tokenBearer);
     }
 }
