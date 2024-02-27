@@ -1,5 +1,6 @@
 package com.nelumbo.parqueadero.security;
 
+import com.nelumbo.parqueadero.entities.Token;
 import com.nelumbo.parqueadero.repositories.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,15 +27,18 @@ public class JWTAuthorizationFilter  extends OncePerRequestFilter {
 
         String bearerToken = request.getHeader("Authorization");
 
-        if(bearerToken!= null && bearerToken.startsWith("Bearer ")){
-           // String token = bearerToken.replace("Bearer", "");
-            String token = bearerToken.split(" ")[1];
-            var isTokenValid = tokenRepository.findByToken(token)
-                    .map(t -> !t.isExpired() && !t.isRevoked() )
+        if(bearerToken!= null && bearerToken.startsWith("Bearer ")) {
+            String token = bearerToken.replace("Bearer", "").trim();
+            //String token = bearerToken.split(" ")[1];
+            Optional<Token> tokenJwt = tokenRepository.findByToken(token);
+            var isTokenValid = tokenJwt
+                    .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
             if(isTokenValid) {
                 UsernamePasswordAuthenticationToken usernamePAT = tokenUtils.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+            }else {
+                tokenJwt.ifPresent(value -> tokenRepository.deleteById(value.getId()));
             }
         }
 
