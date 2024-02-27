@@ -14,7 +14,6 @@ public class UsuarioResponseDto {
     private String apellido;
     private String documentoDeIdentidad;
     private String correo;
-    private String clave;
     private Date fechaRegistro;
-    private Rol rol;
+    private String rol;
 }
