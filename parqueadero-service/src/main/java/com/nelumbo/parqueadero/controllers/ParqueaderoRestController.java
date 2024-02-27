@@ -55,11 +55,10 @@ public class ParqueaderoRestController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String eliminarParqueadero(@PathVariable(name = "id")Long id){
+    public void eliminarParqueadero(@PathVariable(name = "id")Long id){
         parqueaderoService.eliminarParqueadero(id);
-        return "El parqueadero con ID: "+id+" ha sido eliminado correctamente.";
     }
 
     @GetMapping("/listarParqueaderosAsociados")
