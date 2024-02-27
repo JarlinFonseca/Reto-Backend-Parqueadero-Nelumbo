@@ -36,7 +36,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
         }catch (IOException e){
-
+            logger.error("Error al leer AuthCredentials desde el request.", e);
         }
 
         UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
@@ -55,15 +55,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails= (UserDetailsImpl) authResult.getPrincipal();
-        //System.out.println(Arrays.stream(userDetails.getAuthorities().toArray()).findFirst().toString());
-        //userDetails.getAuthorities().toString()
         Object[] authorities = userDetails.getAuthorities().toArray();
-        System.out.println(authorities[0].toString());
         String token = tokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername(),
                 authorities[0].toString(), userDetails.getId());
         response.addHeader("Authorization", "Bearer "+token);
 
-        Usuario usuario= usuarioRepository.findById(userDetails.getId()).orElse(null);
+        Usuario usuario= usuarioRepository.findById(userDetails.getId()).orElseThrow();
         revokeAllUserTokens(usuario);
         saveTokenUser(usuario, token);
 
@@ -88,7 +85,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private void saveTokenUser(Usuario usuario, String tokenJwt){
         var token = Token.builder()
                 .usuario(usuario)
-                .token(tokenJwt)
+                .tokenJwt(tokenJwt)
                 .tokenType(TokenType.BEARER)
                 .revoked(false)
                 .expired(false)

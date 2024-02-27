@@ -90,12 +90,13 @@ public class HistorialServiceImpl implements IHistorialService {
         NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
         formatoMoneda.setMaximumFractionDigits(0);
 
+        final String WORD_SENTENCE=" son: ";
 
         GananciasResponseDto gananciasResponseDto= new GananciasResponseDto();
-        gananciasResponseDto.setHoy("Las ganancias de la fecha de hoy "+fechaHoy+" son: "+formatoMoneda.format(gananciasHoy));
+        gananciasResponseDto.setHoy("Las ganancias de la fecha de hoy "+fechaHoy+WORD_SENTENCE+formatoMoneda.format(gananciasHoy));
         gananciasResponseDto.setSemana("Las ganancias de esta semana son: "+formatoMoneda.format(gananciasSemanaActual));
-        gananciasResponseDto.setMes("Las ganancias del mes de "+fechaActual.getMonth().toString()+" son: "+formatoMoneda.format(gananciasMesActual));
-        gananciasResponseDto.setAnio("Las ganancias del año de "+anioActual+" son: "+formatoMoneda.format(gananciasAnioActual));
+        gananciasResponseDto.setMes("Las ganancias del mes de "+fechaActual.getMonth().toString()+WORD_SENTENCE+formatoMoneda.format(gananciasMesActual));
+        gananciasResponseDto.setAnio("Las ganancias del año de "+anioActual+WORD_SENTENCE+formatoMoneda.format(gananciasAnioActual));
 
         return gananciasResponseDto;
     }

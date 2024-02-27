@@ -19,7 +19,8 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String token;
+    @Column(name = "token_jwt")
+    private String tokenJwt;
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
     private boolean expired;

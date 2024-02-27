@@ -1,6 +1,5 @@
 package com.nelumbo.parqueadero.dto.response;
 
-import com.nelumbo.parqueadero.entities.Rol;
 import lombok.Getter;
 import lombok.Setter;
 

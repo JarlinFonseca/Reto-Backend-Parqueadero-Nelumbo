@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IUsuarioRequestMapper usuarioRequestMapper;
     private final IUsuarioResponseMapper usuarioResponseMapper;
     private final PasswordEncoder passwordEncoder;
-    private final Long ID_ROL_SOCIO = 2L;
+    private static final Long ID_ROL_SOCIO = 2L;
 
     @Override
     public UsuarioResponseDto guadarSocio(UsuarioRequestDto usuarioRequestDto) {

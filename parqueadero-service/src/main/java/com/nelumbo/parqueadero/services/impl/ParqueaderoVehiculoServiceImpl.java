@@ -76,7 +76,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     public SalidaVehiculoParqueaderoResponseDto registrarSalida(SalidaVehiculoParqueaderoRequestDto salidaVehiculoParqueaderoRequestDto) {
         Long idSocioAuth= verificarSocioAutenticado(salidaVehiculoParqueaderoRequestDto.getParqueaderoId());
         String placa = salidaVehiculoParqueaderoRequestDto.getPlaca().toUpperCase();
-        if(!vehiculoService.verificarExistenciaVehiculo(placa)) throw new VehiculoNoExisteException();
+        if(Boolean.FALSE.equals(vehiculoService.verificarExistenciaVehiculo(placa))) throw new VehiculoNoExisteException();
         Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorPlaca(placa);
         ParqueaderoVehiculo parqueaderoVehiculo = obtenerParqueaderoVehiculoPorIdYFlagVehiculoActivo(vehiculo.getId(), true);
         if(!Objects.equals(parqueaderoVehiculo.getParqueadero().getId(), salidaVehiculoParqueaderoRequestDto.getParqueaderoId())) throw new VehiculoNoPerteneceParqueaderoException();
@@ -143,7 +143,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     @Override
     public List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez() {
         List<Object[]> vehiculos;
-        if(esRolSocio()) vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezSocio(obtenerIdUsuarioAutenticado()).orElseThrow();
+        if(Boolean.TRUE.equals(esRolSocio())) vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezSocio(obtenerIdUsuarioAutenticado()).orElseThrow();
         else vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezAdmin().orElseThrow();
 
         if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();

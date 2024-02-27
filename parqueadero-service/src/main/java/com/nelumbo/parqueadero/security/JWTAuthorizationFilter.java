@@ -29,12 +29,11 @@ public class JWTAuthorizationFilter  extends OncePerRequestFilter {
 
         if(bearerToken!= null && bearerToken.startsWith("Bearer ")) {
             String token = bearerToken.replace("Bearer", "").trim();
-            //String token = bearerToken.split(" ")[1];
-            Optional<Token> tokenJwt = tokenRepository.findByToken(token);
+            Optional<Token> tokenJwt = tokenRepository.findByTokenJwt(token);
             var isTokenValid = tokenJwt
                     .map(t -> !t.isExpired() && !t.isRevoked())
                     .orElse(false);
-            if(isTokenValid) {
+            if(Boolean.TRUE.equals(isTokenValid)) {
                 UsernamePasswordAuthenticationToken usernamePAT = tokenUtils.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(usernamePAT);
             }else {

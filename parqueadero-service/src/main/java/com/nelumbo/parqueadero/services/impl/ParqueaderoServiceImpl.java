@@ -39,7 +39,7 @@ public class ParqueaderoServiceImpl implements IParqueaderoService {
     private final IParqueaderoResponseMapper parqueaderoResponseMapper;
     private final IParqueaderoSaveResponseMapper parqueaderoSaveResponseMapper;
     private final IToken token;
-    private final Long ROL_ID_ADMIN= 1L;
+    private static final Long ROL_ID_ADMIN= 1L;
     @Override
     public ParqueaderoSaveResponseDto guardarParqueadero(ParqueaderoRequestDto parqueaderoRequestDto) {
         Parqueadero parqueadero = parqueaderoRequestMapper.toParqueadero(parqueaderoRequestDto);

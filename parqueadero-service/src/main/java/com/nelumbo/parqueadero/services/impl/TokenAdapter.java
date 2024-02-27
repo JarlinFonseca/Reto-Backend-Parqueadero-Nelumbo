@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class TokenAdapter implements IToken {
     private final TokenUtils tokenUtils;
+    private static final String JWT_BEARER_PREFIX ="Bearer ";
     @Override
     public String getBearerToken() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
@@ -23,18 +24,18 @@ public class TokenAdapter implements IToken {
     @Override
     public String getCorreo(String token) {
         if(token==(null)) throw  new NoDataFoundException();
-        return tokenUtils.getCorreo(token.replace("Bearer ",""));
+        return tokenUtils.getCorreo(token.replace(JWT_BEARER_PREFIX,""));
     }
 
     @Override
     public Long getUsuarioAutenticadoId(String token) {
         if(token==(null)) throw  new NoDataFoundException();
-        return tokenUtils.getUsuarioAutenticadoId(token.replace("Bearer ",""));
+        return tokenUtils.getUsuarioAutenticadoId(token.replace(JWT_BEARER_PREFIX,""));
     }
 
     @Override
     public String getUsuarioAutenticadoRol(String token) {
         if(token==(null)) throw  new NoDataFoundException();
-        return tokenUtils.getUsuarioAutenticadoRol(token.replace("Bearer ",""));
+        return tokenUtils.getUsuarioAutenticadoRol(token.replace(JWT_BEARER_PREFIX,""));
     }
 }
