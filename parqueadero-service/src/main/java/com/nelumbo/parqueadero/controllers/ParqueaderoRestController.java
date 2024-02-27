@@ -2,6 +2,7 @@ package com.nelumbo.parqueadero.controllers;
 
 import com.nelumbo.parqueadero.dto.request.ParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.ParqueaderoSaveResponseDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoSocioResponseDto;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class ParqueaderoRestController {
 
     @PostMapping("/guardar")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<ParqueaderoResponseDto> guardarParqueadero(@Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto) {
+    public ResponseEntity<ParqueaderoSaveResponseDto> guardarParqueadero(@Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(parqueaderoService.guardarParqueadero(parqueaderoRequestDto));
     }
 
