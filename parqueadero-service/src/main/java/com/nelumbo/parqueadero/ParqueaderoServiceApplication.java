@@ -10,18 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableFeignClients
 @SpringBootApplication
-public class ParqueaderoServiceApplication implements CommandLineRunner {
+public class ParqueaderoServiceApplication{
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParqueaderoServiceApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		String password = "admin";
-		System.out.println(passwordEncoder.encode(password));
 	}
 }
