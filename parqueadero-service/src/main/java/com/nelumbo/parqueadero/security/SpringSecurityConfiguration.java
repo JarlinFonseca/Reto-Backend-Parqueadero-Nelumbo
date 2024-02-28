@@ -42,7 +42,7 @@ public class SpringSecurityConfiguration {
 
         JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(tokenUtils, usuarioRepository, tokenRepository);
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth/login");
+        jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login");
           http
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
@@ -57,7 +57,7 @@ public class SpringSecurityConfiguration {
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/v1/auth/logout")
+                .logoutUrl("/auth/logout")
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler(((request, response, authentication)
                         -> SecurityContextHolder.clearContext()));
