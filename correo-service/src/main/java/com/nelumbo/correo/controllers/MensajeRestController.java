@@ -23,7 +23,7 @@ public class MensajeRestController {
 
 
     @PostMapping
-    public ResponseEntity<MensajeResponseDto> enviarCorreo(@Valid @RequestBody MensajeRequestDto mensajeRequestDto){
+    public ResponseEntity<MensajeResponseDto> enviarCorreo(@RequestBody @Valid MensajeRequestDto mensajeRequestDto){
         return ResponseEntity.ok(mensajeService.enviarCorreo(mensajeRequestDto));
     }
 

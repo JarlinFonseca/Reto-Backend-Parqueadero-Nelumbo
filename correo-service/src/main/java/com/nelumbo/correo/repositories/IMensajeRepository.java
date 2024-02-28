@@ -1,7 +1,7 @@
 package com.nelumbo.correo.repositories;
 
 import com.nelumbo.correo.entities.Mensaje;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface IMensajeRepository extends JpaRepository<Mensaje, Long> {
+public interface IMensajeRepository extends MongoRepository<Mensaje, String> {
 }
