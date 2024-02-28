@@ -18,8 +18,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
     private final ParqueaderoVehiculoRepository parqueaderoVehiculoRepository;
 
     @Override
-    public Vehiculo guardarVehiculo(String placa) {
-        Vehiculo vehiculo = obtenerVehiculoPorPlaca(placa);
+    public Vehiculo guardarVehiculo(String placa, Vehiculo vehiculo) {
         if(vehiculo==null){
             Vehiculo vehiculoNuevo = new Vehiculo();
             vehiculoNuevo.setPlaca(placa);
@@ -40,8 +39,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public Boolean verificarExistenciaVehiculo(String placa) {
-        Vehiculo vehiculo = obtenerVehiculoPorPlaca(placa);
+    public Boolean verificarExistenciaVehiculo(Vehiculo vehiculo) {
         if (vehiculo==null) return false;
         ParqueaderoVehiculo parqueaderoVehiculo = parqueaderoVehiculoRepository.findByVehiculo_idAndFlagIngresoActivo(vehiculo.getId(), true).orElse(null);
         return parqueaderoVehiculo!=null;

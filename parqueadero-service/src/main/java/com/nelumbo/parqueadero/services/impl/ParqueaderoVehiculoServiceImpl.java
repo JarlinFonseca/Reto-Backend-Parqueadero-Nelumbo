@@ -45,10 +45,11 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         Long cantidadActualVehiculo = parqueaderoVehiculoRepository.getCountVehiculosParqueadero(ingresoVehiculoParqueaderoRequestDto.getParqueaderoId());
         String placa = ingresoVehiculoParqueaderoRequestDto.getPlaca().toUpperCase();
         if((cantidadMaxVehiculos- cantidadActualVehiculo) <= 0) throw new CantidadVehiculosLimiteException();
-        if(Boolean.TRUE.equals(vehiculoService.verificarExistenciaVehiculo(placa)))  throw new VehiculoExisteException();
-        vehiculoService.guardarVehiculo(placa);
-        Parqueadero parqueadero =  parqueaderoRepository.findById(ingresoVehiculoParqueaderoRequestDto.getParqueaderoId()).orElseThrow();
         Vehiculo vehiculo= vehiculoService.obtenerVehiculoPorPlaca(placa);
+        if(Boolean.TRUE.equals(vehiculoService.verificarExistenciaVehiculo(vehiculo)))  throw new VehiculoExisteException();
+        vehiculo = vehiculoService.guardarVehiculo(placa, vehiculo);
+        Parqueadero parqueadero =  parqueaderoRepository.findById(ingresoVehiculoParqueaderoRequestDto.getParqueaderoId()).orElseThrow();
+
         ParqueaderoVehiculo parqueaderoVehiculo = new ParqueaderoVehiculo();
         parqueaderoVehiculo.setFechaIngreso(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         parqueaderoVehiculo.setFlagIngresoActivo(true);
@@ -76,8 +77,8 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     public SalidaVehiculoParqueaderoResponseDto registrarSalida(SalidaVehiculoParqueaderoRequestDto salidaVehiculoParqueaderoRequestDto) {
         Long idSocioAuth= verificarSocioAutenticado(salidaVehiculoParqueaderoRequestDto.getParqueaderoId());
         String placa = salidaVehiculoParqueaderoRequestDto.getPlaca().toUpperCase();
-        if(Boolean.FALSE.equals(vehiculoService.verificarExistenciaVehiculo(placa))) throw new VehiculoNoExisteException();
         Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorPlaca(placa);
+        if(Boolean.FALSE.equals(vehiculoService.verificarExistenciaVehiculo(vehiculo))) throw new VehiculoNoExisteException();
         ParqueaderoVehiculo parqueaderoVehiculo = obtenerParqueaderoVehiculoPorIdYFlagVehiculoActivo(vehiculo.getId(), true);
         if(!Objects.equals(parqueaderoVehiculo.getParqueadero().getId(), salidaVehiculoParqueaderoRequestDto.getParqueaderoId())) throw new VehiculoNoPerteneceParqueaderoException();
         if(!idSocioAuth.equals(parqueaderoVehiculo.getParqueadero().getUsuario().getId())) throw new NoEsSocioDelParqueaderoException();
