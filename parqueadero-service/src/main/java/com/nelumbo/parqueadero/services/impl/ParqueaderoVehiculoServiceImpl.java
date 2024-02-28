@@ -201,7 +201,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         String tokenBearer = token.getBearerToken();
         if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
         Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
-        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
+        Long idSocioParqueadero=  parqueaderoRepository.findById(parqueaderoId).orElseThrow(ParqueaderoNoExisteException::new).getUsuario().getId();
         if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
         return idSocioAuth;
     }

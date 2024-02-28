@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,6 +44,7 @@ public class MensajeServiceImpl implements IMensajeService {
         mensaje.setEmail(mensajeRequestDto.getEmail());
         mensaje.setPlaca(mensajeRequestDto.getPlaca());
         mensaje.setParqueaderoNombre(mensajeRequestDto.getParqueaderoNombre());
+        mensaje.setFechaEnviado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         mensajeRepository.save(mensaje);
     }
 }

@@ -6,11 +6,12 @@ import com.nelumbo.parqueadero.entities.Historial;
 import com.nelumbo.parqueadero.entities.Vehiculo;
 import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
 import com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistradosPorPrimeraVez;
+import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.repositories.HistorialRepository;
+import com.nelumbo.parqueadero.repositories.ParqueaderoRepository;
 import com.nelumbo.parqueadero.repositories.ParqueaderoVehiculoRepository;
 import com.nelumbo.parqueadero.services.IHistorialService;
-import com.nelumbo.parqueadero.services.IParqueaderoService;
 import com.nelumbo.parqueadero.services.IToken;
 import com.nelumbo.parqueadero.services.IVehiculoService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,8 @@ public class HistorialServiceImpl implements IHistorialService {
 
     private final HistorialRepository historialRepository;
     private final ParqueaderoVehiculoRepository parqueaderoVehiculoRepository;
+    private final ParqueaderoRepository parqueaderoRepository;
     private final IVehiculoService vehiculoService;
-    private final IParqueaderoService parqueaderoService;
     private final IToken token;
 
     @Override
@@ -105,7 +106,7 @@ public class HistorialServiceImpl implements IHistorialService {
         String tokenBearer = token.getBearerToken();
         if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
         Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
-        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
+        Long idSocioParqueadero=  parqueaderoRepository.findById(parqueaderoId).orElseThrow(ParqueaderoNoExisteException::new).getUsuario().getId();
         if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
     }
 
