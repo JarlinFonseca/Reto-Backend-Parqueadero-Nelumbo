@@ -36,7 +36,7 @@ public class MensajeServiceImpl implements IMensajeService {
 
     private void guardarDatos(MensajeRequestDto mensajeRequestDto){
         Mensaje mensaje = new Mensaje();
-        mensaje.setMensaje(mensajeRequestDto.getMensaje());
+        mensaje.setDescripcion(mensajeRequestDto.getDescripcion());
         mensaje.setEmail(mensajeRequestDto.getEmail());
         mensaje.setPlaca(mensajeRequestDto.getPlaca());
         mensaje.setParqueaderoNombre(mensajeRequestDto.getParqueaderoNombre());

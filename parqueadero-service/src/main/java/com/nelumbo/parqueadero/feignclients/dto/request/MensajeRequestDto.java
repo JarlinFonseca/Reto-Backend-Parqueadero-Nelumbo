@@ -15,7 +15,7 @@ public class MensajeRequestDto {
     @NotBlank(message = "La placa es requerida")
     private String placa;
     @NotBlank(message = "El mensaje es requerido")
-    private String mensaje;
+    private String descripcion;
     @NotBlank(message = "El nombre del parqueadero es requerido")
     private String parqueaderoNombre;
 

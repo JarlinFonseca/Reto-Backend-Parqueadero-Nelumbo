@@ -65,7 +65,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
 
     private MensajeRequestDto guardarDatosMensaje(Vehiculo vehiculo, Parqueadero parqueadero){
         MensajeRequestDto mensajeRequestDto= new MensajeRequestDto();
-        mensajeRequestDto.setMensaje("Vehiculo parqueado correctamente");
+        mensajeRequestDto.setDescripcion("Vehiculo parqueado correctamente");
         mensajeRequestDto.setEmail(parqueadero.getUsuario().getCorreo());
         mensajeRequestDto.setParqueaderoNombre(parqueadero.getNombre());
         mensajeRequestDto.setPlaca(vehiculo.getPlaca());
@@ -108,7 +108,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     private Double obtenerHoras(Date fechaIngreso, Date fechaSalida){
         Long tiempoInicial=fechaIngreso.getTime();
         Long tiempoFinal=fechaSalida.getTime();
-        Double resta= Double.valueOf(tiempoFinal - tiempoInicial);
+        double resta= (tiempoFinal - tiempoInicial);
         resta=resta / 3600000;
         return resta;
     }

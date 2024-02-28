@@ -23,12 +23,12 @@ public class MensajeRestController {
 
 
     @PostMapping("/enviar")
-    private ResponseEntity<MensajeResponseDto> enviarCorreo(@Valid @RequestBody MensajeRequestDto mensajeRequestDto){
+    public ResponseEntity<MensajeResponseDto> enviarCorreo(@Valid @RequestBody MensajeRequestDto mensajeRequestDto){
         return ResponseEntity.ok(mensajeService.enviarCorreo(mensajeRequestDto));
     }
 
     @GetMapping("/obtenerCorreos")
-    private ResponseEntity<HistorialCorreoResponseDto> obtenerCorreos(){
+    public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreos(){
         return ResponseEntity.ok(mensajeService.obtenerCorreosEnviados());
     }
 }
