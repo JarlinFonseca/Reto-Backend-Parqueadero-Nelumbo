@@ -121,6 +121,8 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
 
     @Override
     public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueadosPorIdParqueadero(Long parqueaderoId) {
+        if(Boolean.TRUE.equals(esRolSocio())) verificarSocioAutenticado(parqueaderoId);
+
         if(Boolean.FALSE.equals(parqueaderoService.verificarExistenciaParqueadero(parqueaderoId))) throw new ParqueaderoNoExisteException();
         List<ParqueaderoVehiculo> parqueaderoVehiculos = parqueaderoVehiculoRepository.findAllByParqueadero_idAndFlagIngresoActivo(parqueaderoId,true).orElseThrow();
         if( parqueaderoVehiculos.isEmpty()) throw new ParqueaderoVacioException();
@@ -133,12 +135,6 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
             vehiculoParqueadoResponseDto.setFechaIngreso(parqueaderoVehiculo.getFechaIngreso());
             return vehiculoParqueadoResponseDto;
         }).collect(Collectors.toList()) ;
-    }
-
-    @Override
-    public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueaderosAsociadosPorId(Long parqueaderoId) {
-        verificarSocioAutenticado(parqueaderoId);
-        return obtenerVehiculosParqueadosPorIdParqueadero(parqueaderoId);
     }
 
     @Override

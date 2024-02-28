@@ -14,8 +14,6 @@ public interface IParqueaderoVehiculoService {
     SalidaVehiculoParqueaderoResponseDto registrarSalida(SalidaVehiculoParqueaderoRequestDto salidaVehiculoParqueaderoRequestDto);
     ParqueaderoVehiculo obtenerParqueaderoVehiculoPorIdYFlagVehiculoActivo(Long id, Boolean flag);
     List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueadosPorIdParqueadero(Long parqueaderoId);
-    List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueaderosAsociadosPorId(Long parqueaderoId);
-
     List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez();
 
     List<IndicadorVehiculosMasVecesRegistradoResponseDto> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(Long parqueaderoId);

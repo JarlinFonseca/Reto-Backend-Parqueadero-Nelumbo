@@ -39,15 +39,8 @@ public class ParqueaderoVehiculoRestController {
     }
 
     @GetMapping("/{id}/vehiculos")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SOCIO')")
     public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerVehiculosParqueadosPorIdParqueadero(@PathVariable(name = "id")Long parqueaderoId){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosParqueadosPorIdParqueadero(parqueaderoId));
     }
-
-    @GetMapping("/{id}/vehiculos/socios")
-    @PreAuthorize("hasAuthority('SOCIO')")
-    public ResponseEntity<List<VehiculoParqueadoResponseDto>> listarVehiculosParqueadosAsociadosPorId(@PathVariable(name = "id") Long parqueaderoId){
-        return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosParqueaderosAsociadosPorId(parqueaderoId));
-    }
-
 }
