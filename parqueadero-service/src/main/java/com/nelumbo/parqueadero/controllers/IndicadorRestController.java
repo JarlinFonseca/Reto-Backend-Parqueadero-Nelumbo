@@ -17,40 +17,40 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/indicador")
+@RequestMapping("/indicadores")
 @RequiredArgsConstructor
 public class IndicadorRestController {
 
     private final IParqueaderoVehiculoService parqueaderoVehiculoService;
     private final IHistorialService historialService;
 
-    @GetMapping("/vehiculosMasVecesRegistradosParqueaderos")
+    @GetMapping("/parqueaderos/vehiculos/mas-veces-registrados")
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
     public ResponseEntity<List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto>> obtenerVehiculosMasVecesRegistradosDiferentesParqueaderos(){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez());
     }
 
-    @GetMapping("/vehiculosMasVecesRegistrados/parqueadero/{id}")
+    @GetMapping("/parqueaderos/{id}/vehiculos/mas-veces-registrados")
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
     public ResponseEntity<List<IndicadorVehiculosMasVecesRegistradoResponseDto>> obtenerVehiculosMasVecesRegistradosParqueaderoPorId(@PathVariable(name="id")Long parqueaderoId){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosMasVecesRegistradosParqueaderoPorId(parqueaderoId));
     }
 
-    @GetMapping("/vehiculosParqueadosPrimeraVez/parqueadero/{id}")
+    @GetMapping("/parqueaderos/{id}/primera-vez")
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
     public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerVehiculosParqueadosPrimeraVezPorParqueaderoId(@PathVariable(name = "id")Long parqueaderoId){
         return ResponseEntity.ok(historialService.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId));
     }
 
-    @GetMapping("/obtenerGanancias/parqueadero/{id}")
+    @GetMapping("/parqueaderos/{id}/ganancias")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<GananciasResponseDto> obtenerGanancias(@PathVariable(name="id")Long parqueaderoId){
         return ResponseEntity.ok(historialService.obtenerGanancias(parqueaderoId));
     }
 
-    @GetMapping("/buscarCoincidencia/placa/{placa}")
+    @GetMapping("/vehiculos/{placa}/coincidencias")
     @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
-    public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerGanancias(@PathVariable(name = "placa") String placa){
+    public ResponseEntity<List<VehiculoParqueadoResponseDto>> buscarVehiculoPorCoindicencia(@PathVariable(name = "placa") String placa){
         return ResponseEntity.ok(parqueaderoVehiculoService.buscarVehiculoPorCoincidenciaPlaca(placa));
     }
 }

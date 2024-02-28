@@ -23,45 +23,45 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/parqueadero")
+@RequestMapping("/parqueaderos")
 @RequiredArgsConstructor
 public class ParqueaderoRestController {
 
     private final IParqueaderoService parqueaderoService;
 
-    @PostMapping("/guardar")
+    @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ParqueaderoSaveResponseDto> guardarParqueadero(@Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(parqueaderoService.guardarParqueadero(parqueaderoRequestDto));
     }
 
 
-    @GetMapping("/listar")
+    @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<ParqueaderoResponseDto>> listarParqueaderos(){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.listarParqueaderos());
     }
 
-    @GetMapping("/obtener/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ParqueaderoResponseDto> obtenerParqueaderoPorId(@PathVariable(name = "id")Long id){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.obtenerParqueaderoPorId(id));
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ParqueaderoResponseDto> actualizarParqueadero(@PathVariable(name = "id")Long id, @Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.actualizarParqueadero(id, parqueaderoRequestDto) );
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ADMIN')")
     public void eliminarParqueadero(@PathVariable(name = "id")Long id){
         parqueaderoService.eliminarParqueadero(id);
     }
 
-    @GetMapping("/listarParqueaderosAsociados")
+    @GetMapping("/socios")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<List<ParqueaderoSocioResponseDto>> listarParqueaderosSocios(){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.listarParqueaderosSocio());

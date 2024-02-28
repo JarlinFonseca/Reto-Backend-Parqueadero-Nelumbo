@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/correo")
+@RequestMapping("/correos")
 @RequiredArgsConstructor
 public class MensajeRestController {
 
     private final IMensajeService mensajeService;
 
 
-    @PostMapping("/enviar")
+    @PostMapping
     public ResponseEntity<MensajeResponseDto> enviarCorreo(@Valid @RequestBody MensajeRequestDto mensajeRequestDto){
         return ResponseEntity.ok(mensajeService.enviarCorreo(mensajeRequestDto));
     }
 
-    @GetMapping("/obtenerCorreos")
+    @GetMapping
     public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreos(){
         return ResponseEntity.ok(mensajeService.obtenerCorreosEnviados());
     }

@@ -21,30 +21,30 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/parqueaderoVehiculo")
+@RequestMapping("/parqueaderos")
 @RequiredArgsConstructor
 public class ParqueaderoVehiculoRestController {
     private final IParqueaderoVehiculoService parqueaderoVehiculoService;
 
-    @PostMapping("/registrarIngreso")
+    @PostMapping("/vehiculos/ingresos")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<IngresoVehiculoParqueaderoResponseDto> registrarIngreso(@Valid @RequestBody IngresoVehiculoParqueaderoRequestDto ingresoVehiculoParqueaderoRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(parqueaderoVehiculoService.registrarIngreso(ingresoVehiculoParqueaderoRequestDto));
     }
 
-    @PostMapping("/registrarSalida")
+    @PostMapping("/vehiculos/salidas")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<SalidaVehiculoParqueaderoResponseDto> registrarSalida(@Valid @RequestBody SalidaVehiculoParqueaderoRequestDto salidaVehiculoParqueaderoRequestDto){
         return ResponseEntity.ok(parqueaderoVehiculoService.registrarSalida(salidaVehiculoParqueaderoRequestDto));
     }
 
-    @GetMapping("/vehiculosParqueados/{id}")
+    @GetMapping("/{id}/vehiculos")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<VehiculoParqueadoResponseDto>> obtenerVehiculosParqueadosPorIdParqueadero(@PathVariable(name = "id")Long parqueaderoId){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosParqueadosPorIdParqueadero(parqueaderoId));
     }
 
-    @GetMapping("/vehiculosParqueadosSocio/{id}")
+    @GetMapping("/{id}/vehiculos/socios")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<List<VehiculoParqueadoResponseDto>> listarVehiculosParqueadosAsociadosPorId(@PathVariable(name = "id") Long parqueaderoId){
         return ResponseEntity.ok(parqueaderoVehiculoService.obtenerVehiculosParqueaderosAsociadosPorId(parqueaderoId));
