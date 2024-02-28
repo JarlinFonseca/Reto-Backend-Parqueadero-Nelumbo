@@ -1,6 +1,5 @@
 package com.nelumbo.parqueadero.dto.response;
 
-import com.nelumbo.parqueadero.entities.Rol;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,6 @@ public class UsuarioResponseDto {
     private String apellido;
     private String documentoDeIdentidad;
     private String correo;
-    private String clave;
     private Date fechaRegistro;
-    private Rol rol;
+    private String rol;
 }

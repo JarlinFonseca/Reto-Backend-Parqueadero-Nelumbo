@@ -3,6 +3,11 @@ package com.nelumbo.parqueadero.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.nelumbo.parqueadero.dto.response.UsuarioLoginResponseDto;
+import com.nelumbo.parqueadero.entities.Token;
+import com.nelumbo.parqueadero.entities.Usuario;
+import com.nelumbo.parqueadero.enums.TokenType;
+import com.nelumbo.parqueadero.repositories.TokenRepository;
+import com.nelumbo.parqueadero.repositories.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +25,8 @@ import java.util.Collections;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final TokenUtils tokenUtils;
+    private final UsuarioRepository usuarioRepository;
+    private final TokenRepository tokenRepository;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -29,7 +36,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
         }catch (IOException e){
-
+            logger.error("Error al leer AuthCredentials desde el request.", e);
         }
 
         UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
@@ -48,13 +55,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails= (UserDetailsImpl) authResult.getPrincipal();
-        //System.out.println(Arrays.stream(userDetails.getAuthorities().toArray()).findFirst().toString());
-        //userDetails.getAuthorities().toString()
         Object[] authorities = userDetails.getAuthorities().toArray();
-        System.out.println(authorities[0].toString());
         String token = tokenUtils.createToken(userDetails.getNombre(), userDetails.getUsername(),
                 authorities[0].toString(), userDetails.getId());
         response.addHeader("Authorization", "Bearer "+token);
+
+        Usuario usuario= usuarioRepository.findById(userDetails.getId()).orElseThrow();
+        revokeAllUserTokens(usuario);
+        saveTokenUser(usuario, token);
+
 
 
         Gson gson = new Gson();
@@ -70,5 +79,29 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().flush();
 
         super.successfulAuthentication(request, response, chain, authResult);
+    }
+
+
+    private void saveTokenUser(Usuario usuario, String tokenJwt){
+        var token = Token.builder()
+                .usuario(usuario)
+                .tokenJwt(tokenJwt)
+                .tokenType(TokenType.BEARER)
+                .revoked(false)
+                .expired(false)
+                .build();
+
+        tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(Usuario usuario) {
+        var validUserTokens = tokenRepository.findAllValidTokensByUser(usuario.getId());
+        if(validUserTokens.isEmpty()) return;
+        validUserTokens.forEach(token -> {
+            token.setRevoked(true);
+            token.setExpired(true);
+        });
+
+        tokenRepository.saveAll(validUserTokens);
     }
 }

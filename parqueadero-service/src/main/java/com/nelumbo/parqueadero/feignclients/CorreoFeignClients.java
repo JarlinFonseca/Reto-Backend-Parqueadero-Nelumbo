@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-@FeignClient(name = "correo-service", url="localhost:8082/api/v1/correo")
+@FeignClient(name = "correo-service", url="localhost:8082/api/v1/correos")
 public interface CorreoFeignClients {
 
-    @PostMapping("/enviar")
+    @PostMapping
     ResponseEntity<MensajeResponseDto> enviarCorreo(@Valid @RequestBody MensajeRequestDto mensajeRequestDto);
 }

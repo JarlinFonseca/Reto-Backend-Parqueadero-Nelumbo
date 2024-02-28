@@ -45,6 +45,8 @@ public class HistorialServiceImpl implements IHistorialService {
 
     @Override
     public List<VehiculoParqueadoResponseDto> obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(Long parqueaderoId) {
+        if(Boolean.TRUE.equals(esRolSocio())) verificarSocioAutenticado(parqueaderoId);
+
         List<Object[]> vehiculosPrimeraVez = parqueaderoVehiculoRepository.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId).orElseThrow();
         if(vehiculosPrimeraVez.isEmpty()) throw new NoExistenVehiculosRegistradosPorPrimeraVez();
 
@@ -66,11 +68,7 @@ public class HistorialServiceImpl implements IHistorialService {
 
     @Override
     public GananciasResponseDto obtenerGanancias(Long parqueaderoId) {
-        String tokenBearer = token.getBearerToken();
-        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
-        Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
-        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
-        if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
+        verificarSocioAutenticado(parqueaderoId);
 
         LocalDate fechaActual = LocalDate.now();
         WeekFields weekFields = WeekFields.ISO;
@@ -92,13 +90,29 @@ public class HistorialServiceImpl implements IHistorialService {
         NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
         formatoMoneda.setMaximumFractionDigits(0);
 
+        final String WORD_SENTENCE=" son: ";
 
         GananciasResponseDto gananciasResponseDto= new GananciasResponseDto();
-        gananciasResponseDto.setHoy("Las ganancias de la fecha de hoy "+fechaHoy+" son: "+formatoMoneda.format(gananciasHoy));
+        gananciasResponseDto.setHoy("Las ganancias de la fecha de hoy "+fechaHoy+WORD_SENTENCE+formatoMoneda.format(gananciasHoy));
         gananciasResponseDto.setSemana("Las ganancias de esta semana son: "+formatoMoneda.format(gananciasSemanaActual));
-        gananciasResponseDto.setMes("Las ganancias del mes de "+fechaActual.getMonth().toString()+" son: "+formatoMoneda.format(gananciasMesActual));
-        gananciasResponseDto.setAnio("Las ganancias del año de "+anioActual+" son: "+formatoMoneda.format(gananciasAnioActual));
+        gananciasResponseDto.setMes("Las ganancias del mes de "+fechaActual.getMonth().toString()+WORD_SENTENCE+formatoMoneda.format(gananciasMesActual));
+        gananciasResponseDto.setAnio("Las ganancias del año de "+anioActual+WORD_SENTENCE+formatoMoneda.format(gananciasAnioActual));
 
         return gananciasResponseDto;
+    }
+
+    private void verificarSocioAutenticado(Long parqueaderoId){
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        Long idSocioAuth = token.getUsuarioAutenticadoId(tokenBearer);
+        Long idSocioParqueadero=  parqueaderoService.obtenerParqueaderoPorId(parqueaderoId).getUsuario().getId();
+        if(!idSocioAuth.equals(idSocioParqueadero)) throw new NoEsSocioDelParqueaderoException();
+    }
+
+    private Boolean esRolSocio() {
+        String tokenBearer = token.getBearerToken();
+        if(tokenBearer== null) throw new UsuarioSocioNoAutenticadoException();
+        String rolSocioAuth = token.getUsuarioAutenticadoRol(tokenBearer);
+        return rolSocioAuth.equals("SOCIO");
     }
 }

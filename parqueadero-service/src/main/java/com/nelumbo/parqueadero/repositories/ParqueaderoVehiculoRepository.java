@@ -19,12 +19,21 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
 
     Optional<List<ParqueaderoVehiculo>> findAllByParqueadero_idAndFlagIngresoActivo(Long parqueaderoId, Boolean flagIngresoActivo);
 
-    @Query(nativeQuery = true, value = "SELECT vehiculo_id, parqueadero_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
+    @Query(nativeQuery = true, value = "SELECT vehiculo_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
             "FROM parqueaderos_vehiculos " +
-            "GROUP BY vehiculo_id, parqueadero_id " +
+            "GROUP BY vehiculo_id " +
             "ORDER BY cantidadVecesRegistrado DESC " +
             "LIMIT 10")
-    Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiez();
+    Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezAdmin();
+
+    @Query(nativeQuery = true, value = "SELECT vehiculo_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
+            "FROM parqueaderos_vehiculos pv join parqueaderos p ON(pv.parqueadero_id=p.id) " +
+            "join usuarios u ON(p.usuario_id=u.id) " +
+            "where u.id = :usuarioId " +
+            "group by vehiculo_id "+
+            "ORDER BY cantidadVecesRegistrado DESC " +
+            "LIMIT 10")
+    Optional<List<Object[]>> obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezSocio(Long usuarioId);
 
     @Query(nativeQuery = true, value = "SELECT vehiculo_id, parqueadero_id, COUNT(vehiculo_id) AS cantidadVecesRegistrado " +
             "FROM parqueaderos_vehiculos " +
@@ -51,4 +60,11 @@ public interface ParqueaderoVehiculoRepository extends JpaRepository<Parqueadero
             "ON (pv.vehiculo_id=v.id) " +
             "WHERE pv.flag_ingreso_activo=true AND v.placa like %:placa%", nativeQuery = true)
     Optional<List<Object[]>> getVehiculosParqueadosPorCoincidencia(String placa);
+
+    @Query(value = "SELECT pv.id, v.placa, pv.fecha_ingreso " +
+            "FROM parqueaderos_vehiculos pv JOIN vehiculos v " +
+            "ON (pv.vehiculo_id=v.id) " +
+            "WHERE pv.flag_ingreso_activo=true AND v.placa like %:placa% " +
+            "and pv.parqueadero_id IN :idsParqueaderos", nativeQuery = true)
+    Optional<List<Object[]>> getVehiculosParqueadosPorCoincidenciaSocio(String placa, List<Long> idsParqueaderos);
 }

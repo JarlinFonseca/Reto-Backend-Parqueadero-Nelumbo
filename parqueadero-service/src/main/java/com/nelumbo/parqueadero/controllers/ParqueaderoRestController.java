@@ -2,6 +2,7 @@ package com.nelumbo.parqueadero.controllers;
 
 import com.nelumbo.parqueadero.dto.request.ParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.ParqueaderoSaveResponseDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoSocioResponseDto;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
 import lombok.RequiredArgsConstructor;
@@ -22,46 +23,45 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/parqueadero")
+@RequestMapping("/parqueaderos")
 @RequiredArgsConstructor
 public class ParqueaderoRestController {
 
     private final IParqueaderoService parqueaderoService;
 
-    @PostMapping("/guardar")
+    @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<ParqueaderoResponseDto> guardarParqueadero(@Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto) {
+    public ResponseEntity<ParqueaderoSaveResponseDto> guardarParqueadero(@Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(parqueaderoService.guardarParqueadero(parqueaderoRequestDto));
     }
 
 
-    @GetMapping("/listar")
+    @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<ParqueaderoResponseDto>> listarParqueaderos(){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.listarParqueaderos());
     }
 
-    @GetMapping("/obtener/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ParqueaderoResponseDto> obtenerParqueaderoPorId(@PathVariable(name = "id")Long id){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.obtenerParqueaderoPorId(id));
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ParqueaderoResponseDto> actualizarParqueadero(@PathVariable(name = "id")Long id, @Valid @RequestBody ParqueaderoRequestDto parqueaderoRequestDto){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.actualizarParqueadero(id, parqueaderoRequestDto) );
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String eliminarParqueadero(@PathVariable(name = "id")Long id){
+    public void eliminarParqueadero(@PathVariable(name = "id")Long id){
         parqueaderoService.eliminarParqueadero(id);
-        return "El parqueadero con ID: "+id+" ha sido eliminado correctamente.";
     }
 
-    @GetMapping("/listarParqueaderosAsociados")
+    @GetMapping("/socios")
     @PreAuthorize("hasAuthority('SOCIO')")
     public ResponseEntity<List<ParqueaderoSocioResponseDto>> listarParqueaderosSocios(){
         return ResponseEntity.status(HttpStatus.OK).body(parqueaderoService.listarParqueaderosSocio());

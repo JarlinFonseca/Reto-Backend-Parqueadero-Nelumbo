@@ -1,6 +1,8 @@
 
 package com.nelumbo.parqueadero.security;
 
+import com.nelumbo.parqueadero.repositories.TokenRepository;
+import com.nelumbo.parqueadero.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +13,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,14 +33,17 @@ public class SpringSecurityConfiguration {
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
     private final PasswordEncoder passwordEncoder;
     private final TokenUtils tokenUtils;
+    private final UsuarioRepository usuarioRepository;
+    private final TokenRepository tokenRepository;
+    private final LogoutHandler logoutHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws  Exception{
 
-        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(tokenUtils);
+        JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(tokenUtils, usuarioRepository, tokenRepository);
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-        return  http
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/auth/login");
+          http
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
                 .authorizeRequests()
@@ -50,7 +56,13 @@ public class SpringSecurityConfiguration {
                 .and()
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .logout()
+                .logoutUrl("/api/v1/auth/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler(((request, response, authentication)
+                        -> SecurityContextHolder.clearContext()));
+
+          return http.build();
     }
 
     @Bean
@@ -75,7 +87,4 @@ public class SpringSecurityConfiguration {
                 .build();
     }
 
-    public static void main(String[] args) {
-        System.out.println("pass: "+new BCryptPasswordEncoder().encode("password"));
-    }
 }

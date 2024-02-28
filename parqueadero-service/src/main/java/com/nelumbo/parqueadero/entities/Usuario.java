@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -25,7 +26,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Usuario {
+public class Usuario implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -25,7 +25,7 @@ public class Mensaje {
     private Long id;
     private String email;
     private String placa;
-    private String mensaje;
+    private String descripcion;
     @Column(name = "parqueadero_nombre")
     private String parqueaderoNombre;
 

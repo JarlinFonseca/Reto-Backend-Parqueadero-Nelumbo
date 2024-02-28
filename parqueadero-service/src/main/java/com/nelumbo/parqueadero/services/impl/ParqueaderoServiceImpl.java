@@ -2,10 +2,10 @@ package com.nelumbo.parqueadero.services.impl;
 
 import com.nelumbo.parqueadero.dto.request.ParqueaderoRequestDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoResponseDto;
+import com.nelumbo.parqueadero.dto.response.ParqueaderoSaveResponseDto;
 import com.nelumbo.parqueadero.dto.response.ParqueaderoSocioResponseDto;
 import com.nelumbo.parqueadero.entities.Parqueadero;
 import com.nelumbo.parqueadero.entities.Usuario;
-import com.nelumbo.parqueadero.exception.NoExisteParqueaderosException;
 import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.SocioNoTieneParqueaderosException;
 import com.nelumbo.parqueadero.exception.UsuarioDebeSerRolSocioException;
@@ -13,6 +13,7 @@ import com.nelumbo.parqueadero.exception.UsuarioNoExisteException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.mapper.IParqueaderoRequestMapper;
 import com.nelumbo.parqueadero.mapper.IParqueaderoResponseMapper;
+import com.nelumbo.parqueadero.mapper.IParqueaderoSaveResponseMapper;
 import com.nelumbo.parqueadero.repositories.ParqueaderoRepository;
 import com.nelumbo.parqueadero.repositories.UsuarioRepository;
 import com.nelumbo.parqueadero.services.IParqueaderoService;
@@ -36,15 +37,16 @@ public class ParqueaderoServiceImpl implements IParqueaderoService {
     private final UsuarioRepository usuarioRepository;
     private final IParqueaderoRequestMapper parqueaderoRequestMapper;
     private final IParqueaderoResponseMapper parqueaderoResponseMapper;
+    private final IParqueaderoSaveResponseMapper parqueaderoSaveResponseMapper;
     private final IToken token;
-    private final Long ROL_ID_ADMIN= 1L;
+    private static final Long ROL_ID_ADMIN= 1L;
     @Override
-    public ParqueaderoResponseDto guardarParqueadero(ParqueaderoRequestDto parqueaderoRequestDto) {
+    public ParqueaderoSaveResponseDto guardarParqueadero(ParqueaderoRequestDto parqueaderoRequestDto) {
         Parqueadero parqueadero = parqueaderoRequestMapper.toParqueadero(parqueaderoRequestDto);
         parqueadero.setFechaRegistro(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         parqueadero.setUsuario(validarUsuario(parqueaderoRequestDto.getUsuarioId()));
         parqueaderoRepository.save(parqueadero);
-        return parqueaderoResponseMapper.toResponse(parqueadero);
+        return parqueaderoSaveResponseMapper.toResponse(parqueadero);
     }
 
     private Usuario validarUsuario(Long id){
@@ -63,9 +65,6 @@ public class ParqueaderoServiceImpl implements IParqueaderoService {
     @Override
     public List<ParqueaderoResponseDto> listarParqueaderos() {
         List<Parqueadero> parqueaderos = parqueaderoRepository.findAll();
-        if(parqueaderos.isEmpty()) {
-            throw new NoExisteParqueaderosException();
-        }
         return parqueaderoResponseMapper.toResponseList(parqueaderos);
     }
 

@@ -2,6 +2,7 @@ package com.nelumbo.parqueadero.services.impl;
 
 import com.nelumbo.parqueadero.dto.request.UsuarioRequestDto;
 import com.nelumbo.parqueadero.dto.response.UsuarioResponseDto;
+import com.nelumbo.parqueadero.entities.Rol;
 import com.nelumbo.parqueadero.entities.Usuario;
 import com.nelumbo.parqueadero.mapper.IUsuarioRequestMapper;
 import com.nelumbo.parqueadero.mapper.IUsuarioResponseMapper;
@@ -27,14 +28,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IUsuarioRequestMapper usuarioRequestMapper;
     private final IUsuarioResponseMapper usuarioResponseMapper;
     private final PasswordEncoder passwordEncoder;
+    private static final Long ID_ROL_SOCIO = 2L;
 
     @Override
     public UsuarioResponseDto guadarSocio(UsuarioRequestDto usuarioRequestDto) {
         Usuario usuario = usuarioRequestMapper.toUsuario(usuarioRequestDto);
         usuario.setClave(passwordEncoder.encode(usuarioRequestDto.getClave()));
         usuario.setFechaRegistro(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-        usuario.setRol(rolService.obtenerRolPorId(2L));
+        Rol rol = rolService.obtenerRolPorId(ID_ROL_SOCIO);
+        usuario.setRol(rol);
         usuarioRepository.save(usuario);
+
         return usuarioResponseMapper.toResponse(usuario);
     }
 }

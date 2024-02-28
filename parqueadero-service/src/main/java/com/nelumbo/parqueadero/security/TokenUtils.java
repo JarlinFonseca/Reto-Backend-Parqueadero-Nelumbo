@@ -1,5 +1,7 @@
 package com.nelumbo.parqueadero.security;
 
+import com.nelumbo.parqueadero.entities.Token;
+import com.nelumbo.parqueadero.repositories.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -22,9 +24,11 @@ import java.util.stream.Collectors;
 public class TokenUtils {
 
     @Value("${ACCESS_TOKEN_SECRET}")
-    private String ACCESS_TOKEN_SECRET;
+    private String accessTokenSecret;
 
-    private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 21_600L;
+    private static final Long ACCESS_TOKEN_VALIDITY_SECONDS = 21_600L;
+
+    private final TokenRepository tokenRepository;
 
     public String createToken(String nombre, String email, String rol, Long id){
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS*1_000;
@@ -39,14 +43,14 @@ public class TokenUtils {
                 .setSubject(email)
                 .setExpiration(expirationDate)
                 .addClaims(extra)
-                .signWith(Keys.hmacShaKeyFor(ACCESS_TOKEN_SECRET.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(accessTokenSecret.getBytes()))
                 .compact();
     }
 
     public UsernamePasswordAuthenticationToken getAuthentication(String token){
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .setSigningKey(accessTokenSecret.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -58,7 +62,11 @@ public class TokenUtils {
 
             return new UsernamePasswordAuthenticationToken(email, null, authorities);
 
-        }catch (JwtException e){
+        }catch (JwtException e) {
+            Token jwt = tokenRepository.findByTokenJwt(token).orElseThrow();
+            jwt.setExpired(true);
+            jwt.setRevoked(true);
+            tokenRepository.save(jwt);
             return null;
         }
 
@@ -68,7 +76,7 @@ public class TokenUtils {
     public String getCorreo(String token){
         try {
             Claims claims  = Jwts.parserBuilder()
-                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .setSigningKey(accessTokenSecret.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -83,7 +91,7 @@ public class TokenUtils {
     public Long getUsuarioAutenticadoId(String token){
         try {
             Claims claims  = Jwts.parserBuilder()
-                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .setSigningKey(accessTokenSecret.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -98,7 +106,7 @@ public class TokenUtils {
     public String getUsuarioAutenticadoRol(String token){
         try {
             Claims claims  = Jwts.parserBuilder()
-                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .setSigningKey(accessTokenSecret.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

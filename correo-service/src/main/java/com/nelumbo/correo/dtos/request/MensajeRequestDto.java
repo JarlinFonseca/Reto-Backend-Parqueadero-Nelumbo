@@ -14,8 +14,8 @@ public class MensajeRequestDto {
     private String email;
     @NotBlank(message = "La placa es requerida")
     private String placa;
-    @NotBlank(message = "El mensaje es requerido")
-    private String mensaje;
+    @NotBlank(message = "La descripcion del mensaje es requerido")
+    private String descripcion;
     @NotBlank(message = "El nombre del parqueadero es requerido")
     private String parqueaderoNombre;
 

@@ -16,13 +16,13 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("api/v1/usuario")
+@RequestMapping("/usuarios")
 @RequiredArgsConstructor
 public class UsuarioRestController {
 
     private final IUsuarioService usuarioService;
 
-    @PostMapping("/agregarSocio")
+    @PostMapping("/socios")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UsuarioResponseDto> guardarSocio(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.guadarSocio(usuarioRequestDto));
