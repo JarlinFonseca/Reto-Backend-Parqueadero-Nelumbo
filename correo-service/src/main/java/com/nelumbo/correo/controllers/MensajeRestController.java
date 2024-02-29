@@ -5,14 +5,12 @@ import com.nelumbo.correo.dtos.response.HistorialCorreoResponseDto;
 import com.nelumbo.correo.dtos.response.MensajeResponseDto;
 import com.nelumbo.correo.services.IMensajeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/correos")
@@ -28,7 +26,8 @@ public class MensajeRestController {
     }
 
     @GetMapping
-    public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreos(){
-        return ResponseEntity.ok(mensajeService.obtenerCorreosEnviados());
+    public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreosFiltrados(@RequestParam(name = "fechaInicio", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")LocalDateTime fechaInicio,
+                                                                     @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime fechaFin){
+        return ResponseEntity.ok(mensajeService.obtenerCorreosFiltrados(fechaInicio, fechaFin));
     }
 }
