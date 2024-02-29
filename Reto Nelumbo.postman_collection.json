@@ -159,7 +159,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTM2NywiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.uSa3GvrMDwn9_mzoPMmZH3Qk6ZeTpJxUl2C7tOADfmngHUOHyr5U3hnF5lU_1iDS",
 									"type": "string"
 								}
 							]
@@ -200,7 +200,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
 									"type": "string"
 								}
 							]
@@ -209,7 +209,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Parqueadero Barato XL\",\r\n    \"cantidadVehiculosMaximo\": 38,\r\n    \"costoHoraVehiculo\": 800,\r\n    \"usuarioId\": 16\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Parqueadero Los Cars\",\r\n    \"cantidadVehiculosMaximo\": 40,\r\n    \"costoHoraVehiculo\": 1500,\r\n    \"usuarioId\": 22\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -240,7 +240,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
 									"type": "string"
 								}
 							]
@@ -271,7 +271,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
 									"type": "string"
 								}
 							]
@@ -279,7 +279,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/parqueaderos/9",
+							"raw": "http://localhost:8081/api/v1/parqueaderos/7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -289,7 +289,7 @@
 								"api",
 								"v1",
 								"parqueaderos",
-								"9"
+								"7"
 							]
 						}
 					},
@@ -303,7 +303,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
 									"type": "string"
 								}
 							]
@@ -311,7 +311,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/parqueaderos/5/vehiculos",
+							"raw": "http://localhost:8081/api/v1/parqueaderos/7/vehiculos",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -321,7 +321,7 @@
 								"api",
 								"v1",
 								"parqueaderos",
-								"5",
+								"7",
 								"vehiculos"
 							]
 						}
@@ -440,7 +440,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTA2Nzk0NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.kriXv-a44LGAk-76s3NS6EplqtO2YsaBF4XuSMOHS2g1nVvVy0fAClIStwrMvhJN",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTMxNywiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.IWwaDDoEZtdncDy8_v3KEykgYj6rLdE-CADRa3JRhlGq1i6jIvclSLIvtRFoj88p",
 									"type": "string"
 								}
 							]
@@ -653,7 +653,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE3NjQ1OCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.EdhVl73FTxyjeSyGVALcRqElcUwwj3rXDGe6ZQMRVxea4XvU9AW9zGn2M4taR4-H",
 									"type": "string"
 								}
 							]
@@ -685,7 +685,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE3NjQ1OCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.EdhVl73FTxyjeSyGVALcRqElcUwwj3rXDGe6ZQMRVxea4XvU9AW9zGn2M4taR4-H",
 									"type": "string"
 								}
 							]
@@ -718,7 +718,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTI2MTkxMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.nWGenuRl3b8eMn1vqCgk7Ppd_5LgApFOwssltCI5Z54HiL4YRq64s957JY5U1KjQ",
 									"type": "string"
 								}
 							]
@@ -727,7 +727,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"KLS878\",\r\n    \"parqueaderoId\": 6\r\n}",
+							"raw": "{\r\n    \"placa\": \"MIK782\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -760,7 +760,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTI2MTkxMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.nWGenuRl3b8eMn1vqCgk7Ppd_5LgApFOwssltCI5Z54HiL4YRq64s957JY5U1KjQ",
 									"type": "string"
 								}
 							]
@@ -769,7 +769,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"KLS878\",\r\n    \"parqueaderoId\": 6\r\n}",
+							"raw": "{\r\n    \"placa\": \"MIK782\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -872,7 +872,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"juan@email.com\",\r\n    \"placa\": \"HTC445\",\r\n    \"descripcion\": \"Guardado Prueba2\",\r\n    \"parqueaderoNombre\": \"La Prueba2\"\r\n}",
+							"raw": "{\r\n    \"email\":\"juan@email.com\",\r\n    \"placa\": \"HTC445\",\r\n    \"descripcion\": \"Guardado Prueba3\",\r\n    \"parqueaderoNombre\": \"La Prueba3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -896,24 +896,12 @@
 					"response": []
 				},
 				{
-					"name": "Obtener correos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Filtrar correos",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"juan@email.com\",\r\n    \"placa\": \"HTC445\",\r\n    \"mensaje\": \"Guardado\",\r\n    \"parqueaderoNombre\": \"El Tombo\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8082/api/v1/correos",
+							"raw": "http://localhost:8082/api/v1/correos?fechaInicio=29/02/2024 11:07:00&fechaFin=29/02/2024 16:05:50",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -923,6 +911,16 @@
 								"api",
 								"v1",
 								"correos"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "29/02/2024 11:07:00"
+								},
+								{
+									"key": "fechaFin",
+									"value": "29/02/2024 16:05:50"
+								}
 							]
 						}
 					},
