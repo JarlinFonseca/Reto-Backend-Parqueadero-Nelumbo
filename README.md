@@ -26,6 +26,7 @@ ___
 - [Spring Security](https://spring.io/projects/spring-security/ "Spring Security"): Spring Security es el módulo del proyecto Spring para incorporar seguridad de acceso a las aplicaciones hechas con Spring Boot. Permite controles de acceso por URL entre otras muchas opciones y es más que suficiente para proteger tu programa.
 - [Token JWT (JSON Web Token)](https://jwt.io/ "Token JWT (JSON Web Token)"): JWT es un estándar abierto (RFC 7519) que define una forma compacta y autocontenida de representar información entre dos partes. La información puede ser verificada y confiable, ya que está firmada digitalmente.
 - [PostgreSQL](https://www.postgresql.org/ "PostgreSQL"): PostgreSQL es un sistema de gestión de bases de datos relacional y de código abierto. Es conocido por su robustez, capacidad de gestión de grandes cantidades de datos y soporte para funciones avanzadas.
+- [MongoDB](https://www.mongodb.com/es): MongoDB: MongoDB es un sistema de gestión de bases de datos NoSQL (Not Only SQL) que se destaca por ser orientado a documentos. Fue desarrollado para abordar las limitaciones de los sistemas de bases de datos relacionales tradicionales y ofrece un enfoque flexible y escalable para el almacenamiento y la recuperación de datos.
 
 
 ___
@@ -41,6 +42,7 @@ ___
 - [JDK 11 o superior](https://www.oracle.com/co/java/technologies/javase/jdk11-archive-downloads.html "JDK 11 o superior")
 - [Gradle](https://gradle.org/ "Gradle")
 - [PostgreSQL](https://www.postgresql.org/ "PostgreSQL")
+- [MongoDB](https://www.mongodb.com/e "MongoDB")
 - [Git](https://git-scm.com/ "Git")
 
 ___
@@ -50,6 +52,7 @@ ___
 - [IntelliJ IDEA Community](https://www.jetbrains.com/idea/download/ "IntelliJ IDEA Community")
 - [Postman](https://www.postman.com/ "Postman")
 - [DBeaver Community](https://dbeaver.io/ "DBeaver Community")
+- [MongoDB: Community Server y Compass](https://www.mongodb.com/try/download/community "MongoDB: Community Server y Compass")
 
 ___
 
@@ -65,11 +68,9 @@ git clone https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo.git
 ```
 
 ##### 2. Crear dos base de datos para los dos microservicios
-Crear dos base de datos local en PostgreSQL:
-- La primera de nombre "parqueadero" para el microservicio de parqueadero-service.
-- La segunda de nombre "correo" para el microservicio de correo-service.
-
-![BD local](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/b25228f5-2055-4ae1-89b4-6f4b3fd292e2)
+Crear dos base de datos local:
+- La primera de nombre "parqueadero" para el microservicio de parqueadero-service en PostgreSQL.
+- La segunda de nombre "correo-db" para el microservicio de correo-service en MongoDB.
 
 
 ##### 3.Abrir las dos carpetas de los microservicios de forma independiente en el IDE
@@ -112,39 +113,23 @@ ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
 ```
 
 
-##### 5. Configurar variables de entorno en el microservicio de correo
-Posteriormente vamos al microservicio de correo, en la estructura del proyecto nos ubicamos en src/main/resources/application-dev.yml y encontrarás las propiedades y variables de entorno(ENV), tienes que agregar los valores de las ENV en el IDE que son las siguientes (ejemplo con los datos que agregue con mi configuración de BD local):
-
-- URL_DB : jdbc:postgresql://localhost:5432/correo
-- USERNAME_DB: postgres
-- PASSWORD_DB: admin
-- DDL_AUTO: create(Si es la primera vez que abres el proyecto) o update(cuando ya se ha importado el import.sql y creado las tablas en la BD)
-  #### NOTA: En la propiedad de spring.jpa.hibernate.ddl-auto, en el ${DDL_AUTO} si es la primera vez que abre el proyecto debe colocar "create" para que le importe los datos en la BD y se creen las tablas sin ningún problema, ya cuando se importen los datos y las tablas esten creadas, cambias el valor de la variable de entorno ${DDL_AUTO}  en "update".
-
-
-Valores de Variables de Entorno en IntelliJ IDEA Community (Correo)
-
-![ENV correo](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/ba0464bc-c982-43cf-8e6c-5391f9f8c416)
-
+##### 5. Revisar propiedades de conexión a la BD en el microservicio de correo
+Posteriormente vamos al microservicio de correo, en la estructura del proyecto nos ubicamos en src/main/resources/application-dev.yml y encontrarás las propiedades de Spring Boot para la conexión a una base de datos MongoDB:
 
 ```sh
 -> src/main/resources/application-dev.yml
 spring:
-  datasource:
-    url: ${URL_DB}
-    username: ${USERNAME_DB}
-    password: ${PASSWORD_DB}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    hibernate:
-      ddl-auto: ${DDL_AUTO}
-    show-sql: true
+    data:
+      mongodb:
+        host: 127.0.0.1
+        port: 27017
+        database: correo-db
+        uri: mongodb://localhost:27017/correo-db
 ```
 
 
 ##### 6. Ejecutar ambos microservicios de Parqueadero y Correo
-Como es la primera vez que ejecutas los microservicios y además en el ENV de DDL_AUTO se agrego con "create", entonces poblara toda la data en las tablas de las base de datos de forma correcta en ambos microservicios, luego de revisar que todo este creado correctamente cambias el DDL_AUTO a "update", como lo explique en los pasos anteriores .
+Como es la primera vez que ejecutas los microservicios y además en el ENV de DDL_AUTO se agrego con "create", entonces poblara toda la data en las tablas de las base de datos de forma correcta en el microservicio del Parqueadero, luego de revisar que todo este creado correctamente cambias el DDL_AUTO a "update" del micro de Parqueadero, como lo explique en los pasos anteriores .
 
 
 ##### 7. Probar las diferentes funcionalidades importando la colección de Postman
@@ -158,14 +143,14 @@ Al momento de probar las funcionalidades debe hacer login como ADMIN o SOCIO, de
 ##### Ejemplo:
 Nos logueamos como ADMIN:
 
-![Login ADMIN](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/03f9fdb7-1a4d-4189-9a7e-8f17c05b458f)
+![Login ADMIN](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/8d528f0b-5906-45e4-8caa-84fe65af5856)
 
 
 Copiamos el token JWT, y nos vamos al endpoint que vamos a probar, por ejemplo la primera opción para agregar el token en Postman:
-![explicacion tokenJWT](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/a0ce3bb8-bcbf-40df-98c2-34306b8dcd3a)
+![explicacion tokenJWT](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/865eab32-b01f-4df5-b050-5849e8e028ee)
 
 Y de esta forma sería la segunda opción de agregar el token JWT:
-![explicacion tokenJWT2](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/2352ff6c-ace1-4d4f-a7e0-fd76c0804e72)
+![explicacion tokenJWT2](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/85017544-90d1-46e5-858f-5ea084f05c8b)
 
 NOTA: Cualquiera de estas dos opciónes puedes usar, ya que es necesario Autenticarse(Hacer el Login) el cual genera un token JWT y luego Autorizar los endpoints de acuerdo a los Roles(ADMIN o SOCIO) con sus permisos. 
 
