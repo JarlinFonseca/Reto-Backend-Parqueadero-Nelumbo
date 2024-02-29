@@ -1,4 +1,6 @@
 spring:
+  jackson:
+    time-zone: America/Bogota
   application:
     name: correo-service
   profiles:

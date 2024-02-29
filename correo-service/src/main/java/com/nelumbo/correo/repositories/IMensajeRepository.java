@@ -1,7 +1,12 @@
 package com.nelumbo.correo.repositories;
 
 import com.nelumbo.correo.entities.Mensaje;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface IMensajeRepository extends JpaRepository<Mensaje, Long> {
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface IMensajeRepository extends MongoRepository<Mensaje, String> {
+
+    List<Mensaje> findByFechaEnviadoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 }

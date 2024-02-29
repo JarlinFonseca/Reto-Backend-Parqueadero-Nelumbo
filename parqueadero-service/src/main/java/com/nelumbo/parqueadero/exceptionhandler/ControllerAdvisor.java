@@ -1,6 +1,7 @@
 package com.nelumbo.parqueadero.exceptionhandler;
 
 import com.nelumbo.parqueadero.exception.NoDataFoundException;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -49,6 +50,14 @@ public class ControllerAdvisor {
             NoDataFoundException ignoredNoDataFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<Map<String,String>> handleFeignException(FeignException feignException){
+        Map<String, String> errors = new HashMap<>();
+        String messageException = "Error al registrar ingreso de vehiculo debido a que el servicio de correo no está disponible.";
+        errors.put(MESSAGE_ERROR, messageException);
+        return  ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(errors);
     }
 
     @ExceptionHandler(Exception.class)

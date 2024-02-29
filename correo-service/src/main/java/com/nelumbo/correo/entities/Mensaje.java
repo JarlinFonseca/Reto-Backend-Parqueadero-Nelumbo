@@ -1,32 +1,27 @@
 package com.nelumbo.correo.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
 
-@Entity
-@Table(name = "mensajes")
+
+@Document(value = "mensajes")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class Mensaje {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
-    private Long id;
+    private String id;
     private String email;
     private String placa;
     private String descripcion;
-    @Column(name = "parqueadero_nombre")
+    @Field(name = "parqueadero_nombre")
     private String parqueaderoNombre;
-
+    @Field(name = "fecha_enviado")
+    private Date fechaEnviado;
 }
