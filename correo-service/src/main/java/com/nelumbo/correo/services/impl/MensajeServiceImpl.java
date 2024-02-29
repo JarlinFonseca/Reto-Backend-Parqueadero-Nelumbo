@@ -56,5 +56,5 @@ public class MensajeServiceImpl implements IMensajeService {
         mensaje.setFechaEnviado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         mensajeRepository.save(mensaje);
     }
-    
+
 }

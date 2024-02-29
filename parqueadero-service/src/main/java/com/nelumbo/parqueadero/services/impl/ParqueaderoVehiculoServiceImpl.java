@@ -17,7 +17,10 @@ import com.nelumbo.parqueadero.services.IParqueaderoService;
 import com.nelumbo.parqueadero.services.IParqueaderoVehiculoService;
 import com.nelumbo.parqueadero.services.IToken;
 import com.nelumbo.parqueadero.services.IVehiculoService;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,6 +40,7 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
     private final ParqueaderoRepository parqueaderoRepository;
     private final IToken token;
     private final CorreoFeignClients correoFeignClients;
+    private static final Logger logger = LoggerFactory.getLogger(ParqueaderoVehiculoServiceImpl.class);
 
     @Override
     public IngresoVehiculoParqueaderoResponseDto registrarIngreso(IngresoVehiculoParqueaderoRequestDto ingresoVehiculoParqueaderoRequestDto) {
@@ -59,7 +63,12 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         IngresoVehiculoParqueaderoResponseDto ingresoVehiculoParqueaderoResponseDto = new IngresoVehiculoParqueaderoResponseDto();
         ingresoVehiculoParqueaderoResponseDto.setId(vehiculo.getId());
 
-        correoFeignClients.enviarCorreo(guardarDatosMensaje(vehiculo,parqueadero));
+
+        try{
+            correoFeignClients.enviarCorreo(guardarDatosMensaje(vehiculo,parqueadero));
+        }catch (FeignException e){
+            logger.error("El servicio de correo no esta disponible debido a lo siguiente: ".concat(e.getMessage()));
+        }
 
         return ingresoVehiculoParqueaderoResponseDto;
     }
