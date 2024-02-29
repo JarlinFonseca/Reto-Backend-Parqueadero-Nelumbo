@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,15 @@ public class MensajeServiceImpl implements IMensajeService {
         List<Mensaje> mensajeList = mensajeRepository.findAll();
         if(mensajeList.isEmpty()) throw new NoDataFoundException("No hay correos enviados");
         Long cantidadCorreosEnviados = (long) mensajeList.size();
-        return new HistorialCorreoResponseDto(mensajeList, cantidadCorreosEnviados);
+        ZoneId zonaColombia = ZoneId.of("America/Bogota");
+
+        List<Mensaje> mensajesColombia = mensajeList.stream().peek(mensaje->{
+                    Date fechaEnvioUTC = mensaje.getFechaEnviado();
+                    LocalDateTime fechaEnvioColombia = fechaEnvioUTC.toInstant().atZone(zonaColombia).toLocalDateTime();
+                    mensaje.setFechaEnviado( Date.from(fechaEnvioColombia.atZone(ZoneId.systemDefault()).toInstant()));
+                })
+                .collect(Collectors.toList());
+        return new HistorialCorreoResponseDto(mensajesColombia, cantidadCorreosEnviados);
     }
 
     private void guardarDatos(MensajeRequestDto mensajeRequestDto){
@@ -44,15 +53,8 @@ public class MensajeServiceImpl implements IMensajeService {
         mensaje.setEmail(mensajeRequestDto.getEmail());
         mensaje.setPlaca(mensajeRequestDto.getPlaca());
         mensaje.setParqueaderoNombre(mensajeRequestDto.getParqueaderoNombre());
-        mensaje.setFechaEnviado(obtenerHoraRestada());
+        mensaje.setFechaEnviado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         mensajeRepository.save(mensaje);
     }
-
-    private Date obtenerHoraRestada(){
-        LocalDateTime fechaHoraActual = LocalDateTime.now();
-        // Restar 5 horas
-        LocalDateTime fechaHoraRestada = fechaHoraActual.minusHours(5);
-
-        return Date.from(fechaHoraRestada.atZone(ZoneId.systemDefault()).toInstant());
-    }
+    
 }
