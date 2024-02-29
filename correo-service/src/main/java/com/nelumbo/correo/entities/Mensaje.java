@@ -11,6 +11,8 @@ import java.util.Date;
 
 @Document(value = "mensajes")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Mensaje {
 
     @Id
@@ -20,5 +22,6 @@ public class Mensaje {
     private String descripcion;
     @Field(name = "parqueadero_nombre")
     private String parqueaderoNombre;
+    @Field(name = "fecha_enviado")
     private Date fechaEnviado;
 }

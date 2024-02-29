@@ -44,7 +44,15 @@ public class MensajeServiceImpl implements IMensajeService {
         mensaje.setEmail(mensajeRequestDto.getEmail());
         mensaje.setPlaca(mensajeRequestDto.getPlaca());
         mensaje.setParqueaderoNombre(mensajeRequestDto.getParqueaderoNombre());
-        mensaje.setFechaEnviado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        mensaje.setFechaEnviado(obtenerHoraRestada());
         mensajeRepository.save(mensaje);
+    }
+
+    private Date obtenerHoraRestada(){
+        LocalDateTime fechaHoraActual = LocalDateTime.now();
+        // Restar 5 horas
+        LocalDateTime fechaHoraRestada = fechaHoraActual.minusHours(5);
+
+        return Date.from(fechaHoraRestada.atZone(ZoneId.systemDefault()).toInstant());
     }
 }
