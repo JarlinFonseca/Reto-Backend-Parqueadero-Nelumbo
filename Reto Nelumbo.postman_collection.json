@@ -89,7 +89,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTMzMzg1OSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.rWompUvN80PgMUM4pTt9lS18GTPBNdobwRhQXn_5eaPjzzIIFQw_dIBHQ100pWDS",
 											"type": "string"
 										}
 									]
@@ -118,18 +118,14 @@
 						{
 							"name": "Buscar vehiculos parqueados mediante coicidencia en la placa",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE1NTQ0MSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.CJu0ti5TBVkl2ry84GXE-_bC-rykJrQoIw5j0pET_B9uUDgAkiEsOmDNjcm-mBT4",
-											"type": "string"
-										}
-									]
-								},
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTMwMSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.ylyyXWBfw9F3GqP7_7QwftazRGeA6XF3pEYFpkPNL2KlCgumKJajKzHZ21DtC38a",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "http://localhost:8081/api/v1/indicadores/vehiculos/DM/coincidencias",
 									"protocol": "http",
@@ -718,7 +714,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTI2MTkxMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.nWGenuRl3b8eMn1vqCgk7Ppd_5LgApFOwssltCI5Z54HiL4YRq64s957JY5U1KjQ",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTQ5NCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JlFMc3MKp_TVpMcCnYwbk8v6AJJwtha0kmkAHSSRfyH4CYOTz_cMryZUIwNx4R_k",
 									"type": "string"
 								}
 							]
@@ -727,7 +723,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"MIK782\",\r\n    \"parqueaderoId\": 7\r\n}",
+							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -760,7 +756,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTI2MTkxMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.nWGenuRl3b8eMn1vqCgk7Ppd_5LgApFOwssltCI5Z54HiL4YRq64s957JY5U1KjQ",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTQ5NCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JlFMc3MKp_TVpMcCnYwbk8v6AJJwtha0kmkAHSSRfyH4CYOTz_cMryZUIwNx4R_k",
 									"type": "string"
 								}
 							]
@@ -769,7 +765,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"MIK782\",\r\n    \"parqueaderoId\": 7\r\n}",
+							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -836,7 +832,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTA5NTk0MSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.dx4Kjs1Zp-BSDC4nkXzpcG0DV8Yluu3P8kBhgos_goumwE25b-LxtNbyeYcHeMxr",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTMzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.hQuhpzfPK6acX2vMLQv0ROT67aXYg74QEkbLwjO6TyU9jwtQoHnu5craGLMx0hlV",
 									"type": "string"
 								}
 							]
@@ -872,7 +868,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"juan@email.com\",\r\n    \"placa\": \"HTC445\",\r\n    \"descripcion\": \"Guardado Prueba3\",\r\n    \"parqueaderoNombre\": \"La Prueba3\"\r\n}",
+							"raw": "{\r\n    \"email\":\"juan@email.com\",\r\n    \"placa\": \"HTC445\",\r\n    \"descripcion\": \"Guardado Prueba7\",\r\n    \"parqueaderoNombre\": \"La Prueba7\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -901,7 +897,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/v1/correos?fechaInicio=29/02/2024 11:07:00&fechaFin=29/02/2024 16:05:50",
+							"raw": "http://localhost:8082/api/v1/correos?fechaInicio=2024-02-29 11:07:00&fechaFin=2024-02-29 16:05:50",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -915,11 +911,11 @@
 							"query": [
 								{
 									"key": "fechaInicio",
-									"value": "29/02/2024 11:07:00"
+									"value": "2024-02-29 11:07:00"
 								},
 								{
 									"key": "fechaFin",
-									"value": "29/02/2024 16:05:50"
+									"value": "2024-02-29 16:05:50"
 								}
 							]
 						}
