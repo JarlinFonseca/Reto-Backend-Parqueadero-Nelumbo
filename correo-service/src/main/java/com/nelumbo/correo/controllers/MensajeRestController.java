@@ -26,8 +26,8 @@ public class MensajeRestController {
     }
 
     @GetMapping
-    public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreosFiltrados(@RequestParam(name = "fechaInicio", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")LocalDateTime fechaInicio,
-                                                                     @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime fechaFin){
+    public ResponseEntity<HistorialCorreoResponseDto> obtenerCorreosFiltrados(@RequestParam(name = "fechaInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")LocalDateTime fechaInicio,
+                                                                     @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime fechaFin){
         return ResponseEntity.ok(mensajeService.obtenerCorreosFiltrados(fechaInicio, fechaFin));
     }
 }
