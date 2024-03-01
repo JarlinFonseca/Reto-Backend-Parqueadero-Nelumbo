@@ -1,6 +1,5 @@
 package com.nelumbo.correo.dtos.response;
 
-import com.nelumbo.correo.entities.Mensaje;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class HistorialCorreoResponseDto {
-    private List<Mensaje> correos;
+    private List<MensajeInfoResponseDto> correos;
     private Long cantidadEnviados;
 }

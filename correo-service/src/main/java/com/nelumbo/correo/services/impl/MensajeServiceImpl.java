@@ -2,6 +2,7 @@ package com.nelumbo.correo.services.impl;
 
 import com.nelumbo.correo.dtos.request.MensajeRequestDto;
 import com.nelumbo.correo.dtos.response.HistorialCorreoResponseDto;
+import com.nelumbo.correo.dtos.response.MensajeInfoResponseDto;
 import com.nelumbo.correo.dtos.response.MensajeResponseDto;
 import com.nelumbo.correo.entities.Mensaje;
 import com.nelumbo.correo.repositories.IMensajeRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,20 +43,17 @@ public class MensajeServiceImpl implements IMensajeService {
         }
 
         Long cantidadCorreosEnviados = (long) mensajeList.size();
-        List<Mensaje> mensajesColombia = convertirFechaMensajeUTCToColombia(mensajeList);
+        List<MensajeInfoResponseDto> mensajesColombia = convertirFechaMensajeUTCToColombia(mensajeList);
         return new HistorialCorreoResponseDto(mensajesColombia, cantidadCorreosEnviados);
     }
 
-    private static List<Mensaje> convertirFechaMensajeUTCToColombia(List<Mensaje> mensajeList) {
+    private  List<MensajeInfoResponseDto> convertirFechaMensajeUTCToColombia(List<Mensaje> mensajeList) {
         ZoneId zonaColombia = ZoneId.of("America/Bogota");
-        return mensajeList.stream().map(mensaje -> {
-                    Date fechaEnvioUTC = mensaje.getFechaEnviado();
-                    LocalDateTime fechaEnvioColombia = fechaEnvioUTC.toInstant().atZone(zonaColombia).toLocalDateTime();
-                    mensaje.setFechaEnviado(Date.from(fechaEnvioColombia.atZone(ZoneId.systemDefault()).toInstant()));
-                    return mensaje;
-                })
-                .collect(Collectors.toList());
+        return mensajeList.stream().map(mensaje -> setearDataMensaje(mensaje,zonaColombia)
+        ).collect(Collectors.toList());
     }
+
+
 
     private void guardarDatos(MensajeRequestDto mensajeRequestDto) {
         Mensaje mensaje = new Mensaje();
@@ -64,6 +63,24 @@ public class MensajeServiceImpl implements IMensajeService {
         mensaje.setParqueaderoNombre(mensajeRequestDto.getParqueaderoNombre());
         mensaje.setFechaEnviado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         mensajeRepository.save(mensaje);
+    }
+
+    private MensajeInfoResponseDto setearDataMensaje(Mensaje mensaje, ZoneId zonaColombia){
+        MensajeInfoResponseDto mensajeInfoResponseDto  = new MensajeInfoResponseDto();
+        mensajeInfoResponseDto.setId(mensaje.getId());
+        mensajeInfoResponseDto.setPlaca(mensaje.getPlaca());
+        mensajeInfoResponseDto.setDescripcion(mensaje.getDescripcion());
+        mensajeInfoResponseDto.setParqueaderoNombre(mensaje.getParqueaderoNombre());
+        mensajeInfoResponseDto.setEmail(mensaje.getEmail());
+
+        Date fechaEnvioUTC = mensaje.getFechaEnviado();
+        LocalDateTime fechaEnvioColombia = fechaEnvioUTC.toInstant().atZone(zonaColombia).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String fechaEnvio = fechaEnvioColombia.format(formatter);
+
+        mensajeInfoResponseDto.setFechaEnviado(fechaEnvio);
+
+        return mensajeInfoResponseDto;
     }
 
     private List<Mensaje> filtrarEntreFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
