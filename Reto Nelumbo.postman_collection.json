@@ -155,7 +155,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTM2NywiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.uSa3GvrMDwn9_mzoPMmZH3Qk6ZeTpJxUl2C7tOADfmngHUOHyr5U3hnF5lU_1iDS",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTg0OTYxMSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.0MaKrx-GZbO13ds0lcF0T_rx0wmqlQIi3dbJnVypMqqk0CFnZCuotg3PYhHtKwtd",
 									"type": "string"
 								}
 							]
@@ -236,7 +236,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTkzMDc4MiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.xC9a0F-JF7jy1zqXSLn49NWKd7_yQoZVbzUif6QBvmjYfzfXQb6BrwtpxgnMphqZ",
 									"type": "string"
 								}
 							]
@@ -267,7 +267,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTc3NzY1NiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.TY-tlAvfj7H8CnTjb4d-uMFhrYDTkcSG28vh7nYrWVHoWMK8SMLsAqH4AMxoTOoy",
 									"type": "string"
 								}
 							]
@@ -275,7 +275,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/parqueaderos/7",
+							"raw": "http://localhost:8081/api/v1/parqueaderos/90",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -285,7 +285,7 @@
 								"api",
 								"v1",
 								"parqueaderos",
-								"7"
+								"90"
 							]
 						}
 					},
@@ -476,7 +476,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -510,7 +510,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -544,7 +544,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -579,7 +579,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -613,7 +613,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTE1MjEzMCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.SnP_-0rfdsoO7Fc6PiXsX7ekNZWf4QcnD-L8G7HE1PUdv7KfSNNdaVzPuD6smpaB",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -923,6 +923,108 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Generar excel",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDU1MzUzNCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.PDOjoXOY5KXcwR7myYeaRLqAqDToEzpy_oy0swLOVT4huuC5pS187sGtr8nf3sA2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/exportar-excel?format=xlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"exportar-excel"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "xlsx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar reporte",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/exportar/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"exportar",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Descargar excel",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDU1MzUzNCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.PDOjoXOY5KXcwR7myYeaRLqAqDToEzpy_oy0swLOVT4huuC5pS187sGtr8nf3sA2",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/download/excel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"download",
+						"excel"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
