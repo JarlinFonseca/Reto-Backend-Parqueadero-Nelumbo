@@ -9,5 +9,10 @@ spring:
     hibernate:
       ddl-auto: ${DDL_AUTO}
     show-sql: true
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      media-types:
+        xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 
 ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
