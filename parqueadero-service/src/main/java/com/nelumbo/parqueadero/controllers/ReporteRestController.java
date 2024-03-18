@@ -19,10 +19,10 @@ public class ReporteRestController {
 
     private final IReporteService reporteService;
 
-    @GetMapping("/exportar/{id}")
-    public ResponseEntity<String> exportarExcel(@PathVariable(name="id")Long parqueaderoId) {
+    @GetMapping("/exportar/parqueaderos/{id}/vehiculos/{placa}")
+    public ResponseEntity<String> exportarExcel(@PathVariable(name="id")Long parqueaderoId, @PathVariable(name="placa")String placa) {
         try {
-            reporteService.generarReporte(parqueaderoId);
+            reporteService.generarReporte(parqueaderoId, placa);
             return ResponseEntity.ok("Archivo Excel generado correctamente");
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Error al generar el archivo Excel: " + e.getMessage());

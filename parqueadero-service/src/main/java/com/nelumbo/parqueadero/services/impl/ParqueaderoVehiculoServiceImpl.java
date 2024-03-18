@@ -152,7 +152,6 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         if(Boolean.TRUE.equals(esRolSocio())) vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezSocio(obtenerIdUsuarioAutenticado()).orElseThrow();
         else vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnDiferentesParqueaderosLimiteDiezAdmin().orElseThrow();
 
-        if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
         return vehiculos.stream().map(vehiculosParqueadero ->{
             IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto();
             Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(Long.parseLong(vehiculosParqueadero[0].toString()));
@@ -168,7 +167,6 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
             verificarSocioAutenticado(parqueaderoId);
         }
         List<Object[]> vehiculos = parqueaderoVehiculoRepository.obtenerVehiculosMasVecesRegistradosEnUnParqueaderoLimiteDiez(parqueaderoId).orElseThrow();
-        if(vehiculos.isEmpty()) throw new NoExistenVehiculosRegistrados();
 
         return vehiculos.stream().map(vehiculosParqueadero ->{
             IndicadorVehiculosMasVecesRegistradoResponseDto vehiculosMasVecesRegistradoResponseDto = new IndicadorVehiculosMasVecesRegistradoResponseDto();
@@ -187,13 +185,12 @@ public class ParqueaderoVehiculoServiceImpl implements IParqueaderoVehiculoServi
         if(Boolean.TRUE.equals(esRolSocio())){
             Long idSocioAuth = obtenerIdUsuarioAutenticado();
             List<Parqueadero> parqueaderosSocio = parqueaderoRepository.findAllByUsuario_id(idSocioAuth).orElse(null);
-            if(parqueaderosSocio==null || parqueaderosSocio.isEmpty()) throw new NoHayCoincidenciasPlacaException();
+            if(parqueaderosSocio==null || parqueaderosSocio.isEmpty()) throw new ParqueaderoNoExisteException();
             List<Long> idsParqueaderos = parqueaderosSocio.stream().map(Parqueadero::getId).collect(Collectors.toList());
              vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidenciaSocio(placa, idsParqueaderos).orElseThrow();
         }else {
             vehiculos = parqueaderoVehiculoRepository.getVehiculosParqueadosPorCoincidencia(placa).orElseThrow();
         }
-        if (vehiculos.isEmpty()) throw new NoHayCoincidenciasPlacaException();
 
         return vehiculos.stream().map(vehiculo ->{
             VehiculoParqueadoResponseDto vehiculoParqueadoResponseDto = new VehiculoParqueadoResponseDto();

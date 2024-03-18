@@ -49,7 +49,6 @@ public class HistorialServiceImpl implements IHistorialService {
         if(Boolean.TRUE.equals(esRolSocio())) verificarSocioAutenticado(parqueaderoId);
 
         List<Object[]> vehiculosPrimeraVez = parqueaderoVehiculoRepository.obtenerVehiculosParqueadosPorPrimeraVezPorParqueaderoId(parqueaderoId).orElseThrow();
-        if(vehiculosPrimeraVez.isEmpty()) throw new NoExistenVehiculosRegistradosPorPrimeraVez();
 
         return vehiculosPrimeraVez.stream().map(vehiculos ->{
             VehiculoParqueadoResponseDto vehiculoParqueadoResponseDto = new VehiculoParqueadoResponseDto();
