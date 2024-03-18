@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "cef1d90b-f28d-4434-877f-8cb3063ee4e1",
-		"name": "Reto Nelumbo Spring Boot",
+		"_postman_id": "9baf6766-757a-4480-b797-ae9e4ffca597",
+		"name": "Reto Nelumbo Springb Boot",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25629549"
+		"_exporter_id": "26017480"
 	},
 	"item": [
 		{
@@ -155,7 +155,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDczMDg2NCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.f2zzbwAoj0gudYfjAgmpVkoIQ9p3dw3yrcICJmiRX5wxvlBemzifcGwXtpZkj7jC5FCHYou4Sg87oIF6wj9SrA",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTg0OTYxMSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.0MaKrx-GZbO13ds0lcF0T_rx0wmqlQIi3dbJnVypMqqk0CFnZCuotg3PYhHtKwtd",
 									"type": "string"
 								}
 							]
@@ -164,7 +164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Juan\",\r\n    \"apellido\": \"Cardona\",\r\n    \"documentoDeIdentidad\": \"24523636\",\r\n    \"correo\": \"juan@gmail.com\",\r\n    \"clave\": \"password\" \r\n}",
+							"raw": "{\r\n    \"nombre\": \"Lucas\",\r\n    \"apellido\": \"Cardona\",\r\n    \"documentoDeIdentidad\": \"24523636\",\r\n    \"correo\": \"lucasc@gmail.com\",\r\n    \"clave\": \"password\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,7 +196,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDczMDg2NCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.f2zzbwAoj0gudYfjAgmpVkoIQ9p3dw3yrcICJmiRX5wxvlBemzifcGwXtpZkj7jC5FCHYou4Sg87oIF6wj9SrA",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTE3NTY5NSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.Lt437xYQdhPVpSJvhQZMDH-mx1Tt1iZGh_4ReQRuwq01e9V8PAbP7frsIV2lCbFE",
 									"type": "string"
 								}
 							]
@@ -205,7 +205,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Parqueadero Los Cars\",\r\n    \"cantidadVehiculosMaximo\": 40,\r\n    \"costoHoraVehiculo\": 1500,\r\n    \"usuarioId\": 3\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Parqueadero Los Cars\",\r\n    \"cantidadVehiculosMaximo\": 40,\r\n    \"costoHoraVehiculo\": 1500,\r\n    \"usuarioId\": 22\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -236,7 +236,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDczMDg2NCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.f2zzbwAoj0gudYfjAgmpVkoIQ9p3dw3yrcICJmiRX5wxvlBemzifcGwXtpZkj7jC5FCHYou4Sg87oIF6wj9SrA",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTkzMDc4MiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.xC9a0F-JF7jy1zqXSLn49NWKd7_yQoZVbzUif6QBvmjYfzfXQb6BrwtpxgnMphqZ",
 									"type": "string"
 								}
 							]
@@ -476,7 +476,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NDk1MiwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.tlJQFeui4SOxZhnIfHY6EjG-RuxeiwPmQLuDaIU6EnYNARKOrwnpTTGUDlnnngyaHVyuXYp3t_wsItbEbKgcMw",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -484,7 +484,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/1/ganancias",
+									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/7/ganancias",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -495,7 +495,7 @@
 										"v1",
 										"indicadores",
 										"parqueaderos",
-										"1",
+										"7",
 										"ganancias"
 									]
 								}
@@ -510,7 +510,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NDk1MiwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.tlJQFeui4SOxZhnIfHY6EjG-RuxeiwPmQLuDaIU6EnYNARKOrwnpTTGUDlnnngyaHVyuXYp3t_wsItbEbKgcMw",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDU1NjAxNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JUcQrkZKX5f8yFa_qhMao-WYlkPyy-ZlQmbhJgRzILhQ08F7lxF5ib1OTQpiLUtb",
 											"type": "string"
 										}
 									]
@@ -544,7 +544,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NDk1MiwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.tlJQFeui4SOxZhnIfHY6EjG-RuxeiwPmQLuDaIU6EnYNARKOrwnpTTGUDlnnngyaHVyuXYp3t_wsItbEbKgcMw",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxMjg3MywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.rYoA4dlDmJiuc5pvR7e22fbo03ukGfUddjq0DEHXSSY6lud30A5QiGeqy-zdTSj0",
 											"type": "string"
 										}
 									]
@@ -552,7 +552,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/1/vehiculos/mas-veces-registrados",
+									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/7/vehiculos/mas-veces-registrados",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -563,7 +563,7 @@
 										"v1",
 										"indicadores",
 										"parqueaderos",
-										"1",
+										"7",
 										"vehiculos",
 										"mas-veces-registrados"
 									]
@@ -579,7 +579,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NDk1MiwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.tlJQFeui4SOxZhnIfHY6EjG-RuxeiwPmQLuDaIU6EnYNARKOrwnpTTGUDlnnngyaHVyuXYp3t_wsItbEbKgcMw",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNzYxMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.oRtAcNPyyPdlettCDtsN3PoTV3DIcNloK1e6lNE6t6n5IDsXKBHNHEA0kOBcCbve",
 											"type": "string"
 										}
 									]
@@ -587,7 +587,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/1/primera-vez",
+									"raw": "http://localhost:8081/api/v1/indicadores/parqueaderos/6/primera-vez",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -598,7 +598,7 @@
 										"v1",
 										"indicadores",
 										"parqueaderos",
-										"1",
+										"6",
 										"primera-vez"
 									]
 								}
@@ -613,7 +613,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NDk1MiwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.tlJQFeui4SOxZhnIfHY6EjG-RuxeiwPmQLuDaIU6EnYNARKOrwnpTTGUDlnnngyaHVyuXYp3t_wsItbEbKgcMw",
+											"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxMTA4NCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.2WKa9EBc-VSEV_DpTH2lqLwYYU8F4kfQtE-0XtX8qUFkg7u2aoyBTGWep94GolVT",
 											"type": "string"
 										}
 									]
@@ -621,7 +621,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/indicadores/vehiculos/DML/coincidencias",
+									"raw": "http://localhost:8081/api/v1/indicadores/vehiculos/DM/coincidencias",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -632,7 +632,7 @@
 										"v1",
 										"indicadores",
 										"vehiculos",
-										"DML",
+										"DM",
 										"coincidencias"
 									]
 								}
@@ -714,7 +714,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDczMTA5MCwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.BaD6iQTS0Fl4J2KogjzH5D9On0aaSHL5_UNqc_pHmfwOVCbz-9aFnXtw2G2tMlfll1xATh6f_finyr97tbDhSw",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTQ5NCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JlFMc3MKp_TVpMcCnYwbk8v6AJJwtha0kmkAHSSRfyH4CYOTz_cMryZUIwNx4R_k",
 									"type": "string"
 								}
 							]
@@ -723,7 +723,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"DPO896\",\r\n    \"parqueaderoId\": 1\r\n}",
+							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -756,7 +756,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDczMTA5MCwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0.BaD6iQTS0Fl4J2KogjzH5D9On0aaSHL5_UNqc_pHmfwOVCbz-9aFnXtw2G2tMlfll1xATh6f_finyr97tbDhSw",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTQ5NCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.JlFMc3MKp_TVpMcCnYwbk8v6AJJwtha0kmkAHSSRfyH4CYOTz_cMryZUIwNx4R_k",
 									"type": "string"
 								}
 							]
@@ -765,7 +765,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"placa\": \"DX4A20\",\r\n    \"parqueaderoId\": 1\r\n}",
+							"raw": "{\r\n    \"placa\": \"DML777\",\r\n    \"parqueaderoId\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -800,7 +800,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"jarlinfonseca@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"juan@gmail.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -969,7 +969,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqYXJsaW5mb25zZWNhQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc0NjQ4OCwiaWQiOjIsIm5vbWJyZSI6IkphcmxpbiIsInJvbCI6IlNPQ0lPIn0._22nOeFCWrptcFqvNNynGCvXsuc7HXuw1bV52LBcn5HcEDTYd-FRhIf7sRzuYzbx-P-ScOfIma5gFponbFzfWQ",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc5MTkyNSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.guGvCbDTUucjK5Q1i1KNAUaS-CqFJs_uxIab36K6pQ750HQrLjhFYW-y43LSOsQK",
 							"type": "string"
 						}
 					]
@@ -977,7 +977,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/exportar/parqueaderos/1/vehiculos/D",
+					"raw": "http://localhost:8081/api/v1/reportes/exportar/parqueaderos/7/vehiculos/D",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -989,8 +989,119 @@
 						"reportes",
 						"exportar",
 						"parqueaderos",
-						"1",
+						"7",
 						"vehiculos",
+						"D"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar reporte Vprincipal",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc5MTkyNSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.guGvCbDTUucjK5Q1i1KNAUaS-CqFJs_uxIab36K6pQ750HQrLjhFYW-y43LSOsQK",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/exportar/parqueaderos/7/vehiculos/placa/DM",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"exportar",
+						"parqueaderos",
+						"7",
+						"vehiculos",
+						"placa",
+						"DM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar reporte Vprincipal ASYNC",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNTIwOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.ayytx8YIA-piUWmpDsHZ-maTou1zVHgmTVmW_Q4uLSzP-Ww3lDUFDShGzvZYoYP7",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/generar/parqueaderos/7/vehiculos/placa/D",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"generar",
+						"parqueaderos",
+						"7",
+						"vehiculos",
+						"placa",
+						"D"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar reporte Vprincipal ASYNC Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgyMzY3MCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.UdsLF7W6Vh5aRoMW6bcwurottO8pvxuAgVcujZiJh2erC28rS01CW1r-QX1AJOnH",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/generar2/parqueaderos/7/vehiculos/placa/D",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"generar2",
+						"parqueaderos",
+						"7",
+						"vehiculos",
+						"placa",
 						"D"
 					]
 				}
@@ -1024,6 +1135,50 @@
 						"v1",
 						"download",
 						"excel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNzczMSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.eNRowjaAHwFueO_1KIrgVklK-BY3DxRHtoiic6EdmQ9COGgtqicFpQ09p1Rt40Ec",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNTIwOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.ayytx8YIA-piUWmpDsHZ-maTou1zVHgmTVmW_Q4uLSzP-Ww3lDUFDShGzvZYoYP7",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/generar/parqueaderos/7/vehiculos/placa/D",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"generar",
+						"parqueaderos",
+						"7",
+						"vehiculos",
+						"placa",
+						"D"
 					]
 				}
 			},
