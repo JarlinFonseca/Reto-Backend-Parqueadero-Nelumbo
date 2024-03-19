@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,11 +37,16 @@ public class ScheduledTask {
     @Scheduled(fixedRate = 30000) // Ejecutar cada 5 minutos
     public void processColaSolicitudes() {
         Queue<CompletableFuture<ReporteResponse2Dto>> colaSolicitudes = reporteService.getColaSolicitudes();
-
+        Map<Long, CompletableFuture<ReporteResponse2Dto>> mapaSolicitudes = new HashMap<>();
+       // AtomicLong contador = new AtomicLong(0);
         // Procesar hasta 2 solicitudes en paralelo
         for (int i = 0; i < 2; i++) {
             CompletableFuture<ReporteResponse2Dto> future = colaSolicitudes.poll();
             if (future != null) {
+                //PROBAR
+                long identificador = contador.getAndIncrement();
+                mapaSolicitudes.put(identificador, future);
+
                 future.thenAccept(reporteResponseDto -> {
                     try {
                         CompletableFuture<ExcelResponseDto> excelResponseDtoCompletableFuture = excelService.generarExcelReporteBytes(
@@ -85,6 +92,17 @@ public class ScheduledTask {
                 break; // Si no hay más solicitudes en la cola, sal del bucle
             }
         }
+        //PROBAR
+        // Esperar a que todas las solicitudes se completen
+        CompletableFuture<Void> todasLasSolicitudes = CompletableFuture.allOf(mapaSolicitudes.values().toArray(new CompletableFuture[0]));
+
+        todasLasSolicitudes.thenRun(() -> {
+            // Encontrar la última solicitud
+            Long ultimoIdentificador = mapaSolicitudes.keySet().stream().max(Long::compare).orElse(null);
+            CompletableFuture<ReporteResponse2Dto> ultimaSolicitud = mapaSolicitudes.get(ultimoIdentificador);
+            // Realizar acciones adicionales con la última solicitud...
+        });
+
     }
 }
 

@@ -1042,7 +1042,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNTIwOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.ayytx8YIA-piUWmpDsHZ-maTou1zVHgmTVmW_Q4uLSzP-Ww3lDUFDShGzvZYoYP7",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDg3NzkyNCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.Ev8hbxA6-47lVzTXFVc7NicJJQ4654Vpn_sXw2Wv8UZxooBxa64GIcWMAWF2fGX4",
 							"type": "string"
 						}
 					]
@@ -1079,7 +1079,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgyMzY3MCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.UdsLF7W6Vh5aRoMW6bcwurottO8pvxuAgVcujZiJh2erC28rS01CW1r-QX1AJOnH",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
 							"type": "string"
 						}
 					]
@@ -1087,7 +1087,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/generar2/parqueaderos/7/vehiculos/placa/D",
+					"raw": "http://localhost:8081/api/v1/reportes/generar2/parqueaderos/7/vehiculos/placa/DM",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1102,7 +1102,7 @@
 						"7",
 						"vehiculos",
 						"placa",
-						"D"
+						"DM"
 					]
 				}
 			},
@@ -1179,6 +1179,202 @@
 						"vehiculos",
 						"placa",
 						"D"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S3 Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/BackDev/Desktop/Reto-Backend-Parqueadero-Nelumbo/parqueadero-service/reporte229674557.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/s3/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"s3",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S3 list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/s3/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"s3",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S3 get date",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwNzgzMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.XoxxoMfP265FLmB3NNewTkris6JFD_nmt_4r7BCnG1r5eJTtdhd3wEcoVnFz8mnB",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/s3/date?key=ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"s3",
+						"date"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "S3 download",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDg4NTQwNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.uFEAa9Ci6w3KDuu3Za2Q9mzf5mvgP6kzA6GJWfowS9iHyFvGGjODczgs74pm23gh",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/s3/download?key=1710868610014_reporte.xlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"s3",
+						"download"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1710868610014_reporte.xlsx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Descargar ultimo reporte",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/descargar/ultimo-reporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"descargar",
+						"ultimo-reporte"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener fecha de la ultima solicitud del reporte",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/v1/reportes/solicitudes/fecha",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"reportes",
+						"solicitudes",
+						"fecha"
 					]
 				}
 			},
