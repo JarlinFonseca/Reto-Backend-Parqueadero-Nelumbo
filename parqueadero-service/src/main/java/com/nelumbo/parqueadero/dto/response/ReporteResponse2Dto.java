@@ -15,4 +15,5 @@ public class ReporteResponse2Dto {
     private GananciasResponseDto gananciasResponseDto;
     private String nombreParqueadero;
     private String placa;
+    private String tokenJwt;
 }

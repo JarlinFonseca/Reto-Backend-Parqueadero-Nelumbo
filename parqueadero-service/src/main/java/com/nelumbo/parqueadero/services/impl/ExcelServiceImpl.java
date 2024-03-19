@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -122,6 +123,97 @@ public class ExcelServiceImpl implements IExcelService {
             }
 
 
+            excelResponseDto.setMensaje("Excel generado correctamente");
+
+            return CompletableFuture.completedFuture(excelResponseDto);
+        }
+    }
+
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ExcelResponseDto> generarExcelReporteBytes(List<VehiculoParqueadoResponseDto> indicadorVehiculoParqueadoPrimeraVez, List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto> indicadorVehiculosMasVecesRegistradosDiferentesParqueaderos, List<IndicadorVehiculosMasVecesRegistradoResponseDto> indicadorVehiculosMasVecesRegistrado, List<VehiculoParqueadoResponseDto> vehiculosPorCoincidencia, GananciasResponseDto indicadorGanancias, String nombreParqueadero, String placa) throws IOException {
+        if (indicadorVehiculoParqueadoPrimeraVez.isEmpty() &&
+                indicadorVehiculosMasVecesRegistradosDiferentesParqueaderos.isEmpty() &&
+                indicadorVehiculosMasVecesRegistrado.isEmpty() &&
+                indicadorGanancias == null &&
+                vehiculosPorCoincidencia.isEmpty()) {
+            ExcelResponseDto excelResponseDto = new ExcelResponseDto();
+            excelResponseDto.setMensaje("Excel no generado, debido a que no hay indicadores para el parqueadero y coincidencia solicitada");
+            excelResponseDto.setIndicadores("No hay indicadores");
+            return CompletableFuture.completedFuture(excelResponseDto);
+        }
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+
+            // Establecer el estilo para la cabecera principal
+            CellStyle mainHeaderStyle = getMainHeaderStyle(workbook);
+            // Establecer el estilo para las cabeceras de las columnas
+            CellStyle columnHeaderStyle = getColumnHeaderStyle(workbook);
+            // Establecer el estilo para los datos
+            CellStyle dataStyle = getDataStyle(workbook);
+
+            long numero = (long) (Math.random() * 999999999) + 1;
+            String rutaArchivo = "reporte"+numero+".xlsx";
+
+
+            // Crear las cabeceras de las columnas
+            String[] headers = {"ID", "Placa", "Fecha de Ingreso"};
+            String[] headers2 = {"ID", "Placa", "Cantidad veces registrado"};
+            String[] headers3 = {"Hoy", "Semana", "Mes", "Año"};
+
+            ExcelResponseDto excelResponseDto = new ExcelResponseDto();
+
+            if(!indicadorVehiculoParqueadoPrimeraVez.isEmpty()){
+                Sheet sheet = workbook.createSheet("Parqueados Primera Vez");
+                createMainHeader(sheet, workbook, "Vehículos Parqueados por Primera Vez", mainHeaderStyle, 3);
+                createColumnHeaders(sheet, workbook, headers, columnHeaderStyle);
+                agregarDatosAExcel(sheet, indicadorVehiculoParqueadoPrimeraVez, dataStyle,null );
+                concatenarIndicador(excelResponseDto, 1);
+            }
+
+            if(!indicadorVehiculosMasVecesRegistradosDiferentesParqueaderos.isEmpty()){
+                Sheet sheet2 = workbook.createSheet("Vehiculos más registrados (D.P)");
+                createMainHeader(sheet2, workbook, "Vehículos más veces registrados en diferentes parqueaderos", mainHeaderStyle, 3);
+                createColumnHeaders(sheet2, workbook, headers2, columnHeaderStyle);
+                agregarDatosAExcel(sheet2, indicadorVehiculosMasVecesRegistradosDiferentesParqueaderos, dataStyle, null );
+                concatenarIndicador(excelResponseDto, 2);
+            }
+
+            if(!indicadorVehiculosMasVecesRegistrado.isEmpty()){
+                Sheet sheet3 = workbook.createSheet("Vehiculos más registrados en P");
+                createMainHeader(sheet3, workbook, "Vehículos más veces registrados en un parqueadero: "+nombreParqueadero, mainHeaderStyle, 3);
+                createColumnHeaders(sheet3, workbook, headers2, columnHeaderStyle);
+                agregarDatosAExcel(sheet3, indicadorVehiculosMasVecesRegistrado, dataStyle, null );
+                concatenarIndicador(excelResponseDto, 3);
+            }
+
+            if(indicadorGanancias!=null){
+                Sheet sheet4 = workbook.createSheet("Ganancias de un parqueadero");
+                createColumnHeaders(sheet4, workbook, headers3, columnHeaderStyle);
+                createMainHeader(sheet4, workbook, "Ganancias de un parqueadero: "+nombreParqueadero, mainHeaderStyle, 0);
+                agregarDatosAExcel(sheet4, null, dataStyle, indicadorGanancias );
+                concatenarIndicador(excelResponseDto, 4);
+            }
+
+            if(!vehiculosPorCoincidencia.isEmpty()){
+                Sheet sheet5 = workbook.createSheet("Coincidencias de placa");
+                createMainHeader(sheet5, workbook, "Coincidencias de la placa: "+placa, mainHeaderStyle, 3);
+                createColumnHeaders(sheet5, workbook, headers, columnHeaderStyle);
+                agregarDatosAExcel(sheet5, vehiculosPorCoincidencia, dataStyle, null);
+                concatenarIndicador(excelResponseDto, 5);
+            }
+
+            // Escribir el archivo en un ByteArrayOutputStream
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            workbook.write(byteArrayOutputStream);
+
+            // Obtener los bytes del ByteArrayOutputStream
+            byte[] fileBytes = byteArrayOutputStream.toByteArray();
+
+            // Cerrar el ByteArrayOutputStream
+            byteArrayOutputStream.close();
+
+            excelResponseDto.setArchivo(fileBytes);
             excelResponseDto.setMensaje("Excel generado correctamente");
 
             return CompletableFuture.completedFuture(excelResponseDto);
