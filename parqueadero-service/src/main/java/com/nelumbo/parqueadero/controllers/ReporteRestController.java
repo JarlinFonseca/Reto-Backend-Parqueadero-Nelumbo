@@ -22,7 +22,7 @@ public class ReporteRestController {
     private final IAWSS3Service awss3Service;
 
     @GetMapping("/parqueaderos/{id}/vehiculos/placa/{placa}")
-    @PreAuthorize("hasAuthority('SOCIO') OR hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SOCIO')")
     public ResponseEntity<ReporteResponseAsyncDto> generarReporteAsync(@PathVariable(name="id")Long parqueaderoId, @PathVariable(name="placa")String placa)  {
         IndicadoresGeneralDto indicadoresGeneralDto = reporteService.obtenerTodosIndicadores(parqueaderoId, placa);
         reporteService.generarReporteIndicadores(indicadoresGeneralDto);
@@ -30,6 +30,7 @@ public class ReporteRestController {
     }
 
     @GetMapping("/ultimo-reporte")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SOCIO')")
     public ResponseEntity<Resource> descargarUltimoReporte(){
         InputStreamResource resource = new InputStreamResource(reporteService.descargarUltimoReporte());
         String nombreArchivo = awss3Service.getNameFileS3(); // Reemplaza esto con el método real que obtiene el nombre del archivo
@@ -44,6 +45,7 @@ public class ReporteRestController {
     }
 
     @GetMapping("/solicitudes/fecha")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SOCIO')")
     public ResponseEntity<FechaReporteResponseDto> getFechaUltimoReporte(){
         return ResponseEntity.ok(reporteService.obtenerFechaUltimoReporte());
     }
