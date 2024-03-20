@@ -26,13 +26,16 @@ ___
 - [Spring Security](https://spring.io/projects/spring-security/ "Spring Security"): Spring Security es el módulo del proyecto Spring para incorporar seguridad de acceso a las aplicaciones hechas con Spring Boot. Permite controles de acceso por URL entre otras muchas opciones y es más que suficiente para proteger tu programa.
 - [Token JWT (JSON Web Token)](https://jwt.io/ "Token JWT (JSON Web Token)"): JWT es un estándar abierto (RFC 7519) que define una forma compacta y autocontenida de representar información entre dos partes. La información puede ser verificada y confiable, ya que está firmada digitalmente.
 - [PostgreSQL](https://www.postgresql.org/ "PostgreSQL"): PostgreSQL es un sistema de gestión de bases de datos relacional y de código abierto. Es conocido por su robustez, capacidad de gestión de grandes cantidades de datos y soporte para funciones avanzadas.
-- [MongoDB](https://www.mongodb.com/es): MongoDB: MongoDB es un sistema de gestión de bases de datos NoSQL (Not Only SQL) que se destaca por ser orientado a documentos. Fue desarrollado para abordar las limitaciones de los sistemas de bases de datos relacionales tradicionales y ofrece un enfoque flexible y escalable para el almacenamiento y la recuperación de datos.
+- [MongoDB](https://www.mongodb.com/es "MongoDB"):  MongoDB es un sistema de gestión de bases de datos NoSQL (Not Only SQL) que se destaca por ser orientado a documentos. Fue desarrollado para abordar las limitaciones de los sistemas de bases de datos relacionales tradicionales y ofrece un enfoque flexible y escalable para el almacenamiento y la recuperación de datos.
+- [AWS](https://us-east-2.console.aws.amazon.com/console/home "AWS"): Amazon Web Services (AWS) es una plataforma de servicios en la nube ofrecida por Amazon.com. Proporciona una amplia gama de servicios de infraestructura informática, almacenamiento, bases de datos, análisis, inteligencia artificial, aprendizaje automático, Internet de las cosas (IoT), seguridad, desarrollo de aplicaciones y más.
+- [Amazon S3 (Simple Storage Service)](https://s3.console.aws.amazon.com/s3/buckets "Amazon S3"): servicio de AWS que proporciona almacenamiento de objetos escalable en la nube, que permite a los usuarios almacenar y recuperar grandes cantidades de datos.
 
 
 ___
 ### Modelo Relacional BD:
 
-![Modelo relacional Parqueadero drawio](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/24704d6d-4a79-4f78-a562-5947fd14200d)
+![Modelo relacional Parqueadero-Modelo relacional - Parqueadero drawio](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/432780dd-5646-484a-8dbf-095de9efd871)
+
 
 
 ___
@@ -44,6 +47,7 @@ ___
 - [PostgreSQL](https://www.postgresql.org/ "PostgreSQL")
 - [MongoDB](https://www.mongodb.com/e "MongoDB")
 - [Git](https://git-scm.com/ "Git")
+- [Cuenta de AWS- Amazon S3](https://us-east-2.console.aws.amazon.com/console/home "Cuenta de AWS - Servicio Amazon S3")
 
 ___
 
@@ -87,9 +91,14 @@ Nos vamos al microservicio del parqueadero, en la estructura del proyecto nos ub
 - PASSWORD_DB: admin
 - DDL_AUTO: create(Si es la primera vez que abres el proyecto) o update(cuando ya se ha importado el import.sql y creado las tablas en la BD)
   #### NOTA: En la propiedad de spring.jpa.hibernate.ddl-auto, en el ${DDL_AUTO} si es la primera vez que abre el proyecto debe colocar "create" para que le importe los datos en la BD y se creen las tablas sin ningún problema, ya cuando se importen los datos y las tablas esten creadas, cambias el valor de la variable de entorno ${DDL_AUTO} en "update".
+  #### Para las variables de entorno de AWS debes crear una cuenta personal, en IAM crear un usuario, darle los permisos de administrador, full acceso a S3 y generar las claves de acceso para usar AWS SDK:
+- AWS_ACCESS_KEY_ID: este valor es dado cuando generas las claves de acceso.
+- AWS_SECRET_ACCESS_KEY: este valor es dado cuando generas las claves de acceso.
+- AWS_BUCKET_NAME: debes crear un bucket y colocar el nombre en esta variable de entorno.
+- AWS_REGION: debes colocar la región donde creaste el bucket.
 - ACCESS_TOKEN_SECRET: (codigo muy secreto ej: VEVFZ1EwOU9WRkpC) : en este apartado agregas un código secreto tuyo que no debe saber nadie, y es necesario para firmar el token JWT y tener siempre segura la API.
 
-Valores de Variables de Entorno en IntelliJ IDEA Community (Parqueadero)
+Valores de Variables de Entorno en IntelliJ IDEA Community (Parqueadero)- Ejemplo
 
 ![ENV parqueadero](https://github.com/JarlinFonseca/Reto-Backend-Parqueadero-Nelumbo/assets/48332117/a7747b73-c8f9-40e6-b5d7-4f147494f026)
 
@@ -108,6 +117,19 @@ spring:
     hibernate:
       ddl-auto: ${DDL_AUTO}
     show-sql: true
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      media-types:
+        xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+aws:
+  access_key_id: ${AWS_ACCESS_KEY_ID}
+  secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+  s3:
+    bucket: ${AWS_BUCKET_NAME}
+    region: ${AWS_REGION}
+
 
 ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
 ```
@@ -129,7 +151,7 @@ spring:
 
 
 ##### 6. Ejecutar ambos microservicios de Parqueadero y Correo
-Como es la primera vez que ejecutas los microservicios y además en el ENV de DDL_AUTO se agrego con "create", entonces poblara toda la data en las tablas de las base de datos de forma correcta en el microservicio del Parqueadero, luego de revisar que todo este creado correctamente cambias el DDL_AUTO a "update" del micro de Parqueadero, como lo explique en los pasos anteriores .
+Como es la primera vez que ejecutas los microservicios y además en el ENV de DDL_AUTO se agrego con "create", entonces poblara toda la data en las tablas de las base de datos de forma correcta en el microservicio del Parqueadero, luego de revisar que todo este creado correctamente cambias el DDL_AUTO a "update" del micro de Parqueadero, como lo explique en los pasos anteriores.
 
 
 ##### 7. Probar las diferentes funcionalidades importando la colección de Postman
