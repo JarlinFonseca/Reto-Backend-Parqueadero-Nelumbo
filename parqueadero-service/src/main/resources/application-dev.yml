@@ -9,5 +9,18 @@ spring:
     hibernate:
       ddl-auto: ${DDL_AUTO}
     show-sql: true
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      media-types:
+        xlsx: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+aws:
+  access_key_id: ${AWS_ACCESS_KEY_ID}
+  secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+  s3:
+    bucket: ${AWS_BUCKET_NAME}
+    region: ${AWS_REGION}
+
 
 ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
