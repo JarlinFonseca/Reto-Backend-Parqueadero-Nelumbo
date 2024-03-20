@@ -25,8 +25,8 @@ public class Reporte {
     private Date fechaCreado;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecha_guardado")
-    private Date fechaGuardado;
+    @Column(name = "fecha_solicitud")
+    private Date fechaSolicitud;
 
     private Long incrementador;
 

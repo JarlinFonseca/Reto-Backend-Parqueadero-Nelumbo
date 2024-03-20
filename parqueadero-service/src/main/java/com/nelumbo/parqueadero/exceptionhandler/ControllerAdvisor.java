@@ -110,6 +110,9 @@ public class ControllerAdvisor {
             case "class com.nelumbo.parqueadero.exception.NoHayCoincidenciasPlacaException":
                 messageException = "No hay coincidencias de placas de vehiculos de acuerdo a lo ingresado.";
                 break;
+            case "class com.nelumbo.parqueadero.exception.ExcelErrorException":
+                messageException = "Error al generar el archivo de excel.";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

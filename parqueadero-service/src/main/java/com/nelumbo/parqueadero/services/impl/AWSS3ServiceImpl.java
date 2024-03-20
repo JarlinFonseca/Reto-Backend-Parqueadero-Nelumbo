@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.nelumbo.parqueadero.dto.response.UploadFileResponseDto;
-import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.repositories.ReporteRepository;
 import com.nelumbo.parqueadero.services.IAWSS3Service;
 import com.nelumbo.parqueadero.services.IToken;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,10 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,23 +30,24 @@ import java.util.stream.Collectors;
 public class AWSS3ServiceImpl implements IAWSS3Service {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AWSS3ServiceImpl.class);
-
     private final AmazonS3 amazonS3;
     private final ReporteRepository reporteRepository;
     private final IToken token;
+    private final Random random = new Random();
 
     @Value("${aws.s3.bucket}")
     private String bucketName;
+
     @Override
     public void uploadFile(MultipartFile file) {
         File mainFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        try (FileOutputStream stream = new FileOutputStream(mainFile)){
+        try (FileOutputStream stream = new FileOutputStream(mainFile)) {
             stream.write(file.getBytes());
-            String newFileName = System.currentTimeMillis() +"_" +mainFile.getName();
-            LOGGER.info("Subiendo archivo con el nombre..."+newFileName);
+            String newFileName = System.currentTimeMillis() + "_" + mainFile.getName();
+            LOGGER.info("Subiendo archivo con el nombre... {}", newFileName);
             PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
             amazonS3.putObject(request);
-        }catch (IOException e){
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
 
@@ -62,7 +58,7 @@ public class AWSS3ServiceImpl implements IAWSS3Service {
     public List<String> getObjectsFromS3() {
         ListObjectsV2Result result = amazonS3.listObjectsV2(bucketName);
         List<S3ObjectSummary> objets = result.getObjectSummaries();
-        return  objets.stream().map(S3ObjectSummary::getKey).collect(Collectors.toList());
+        return objets.stream().map(S3ObjectSummary::getKey).collect(Collectors.toList());
     }
 
     @Override
@@ -91,31 +87,27 @@ public class AWSS3ServiceImpl implements IAWSS3Service {
 
     @Override
     public InputStream descargarArchivo() {
-
         String tokenBearer = token.getBearerToken();
         Long idUsuario = token.getUsuarioAutenticadoId(tokenBearer);
 
-
         String key = reporteRepository.findUltimoReporteNombreArchivoPorUsuarioId(idUsuario).orElseThrow();
         S3Object object = amazonS3.getObject(bucketName, key);
-        // Obtener el nombre del archivo del objeto S3
-        String archivoNombre = object.getKey();
 
         return object.getObjectContent();
     }
 
     public UploadFileResponseDto uploadFileExcel(byte[] fileBytes) {
 
-        UploadFileResponseDto uploadFileResponseDto= new UploadFileResponseDto();
+        UploadFileResponseDto uploadFileResponseDto = new UploadFileResponseDto();
         try {
-            File  mainFile = File.createTempFile("temp-file", null);
-            try (FileOutputStream stream = new FileOutputStream(mainFile)){
+            File mainFile = File.createTempFile("temp-file", null);
+            try (FileOutputStream stream = new FileOutputStream(mainFile)) {
                 stream.write(fileBytes);
                 String uniqueId = UUID.randomUUID().toString();
-                long numero = (long) (Math.random() * 999999999) + 1;
-                String newFileName = uniqueId +numero+"_reporte.xlsx";
+                long numero = random.nextLong();
+                String newFileName = uniqueId + numero + "_reporte.xlsx";
                 uploadFileResponseDto.setNombreArchivo(newFileName);
-                LOGGER.info("Subiendo archivo con el nombre..." + newFileName);
+                LOGGER.info("Subiendo archivo con el nombre... {}", newFileName);
                 PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
                 amazonS3.putObject(request);
 
@@ -125,7 +117,7 @@ public class AWSS3ServiceImpl implements IAWSS3Service {
             Files.delete(tempFilePath);
 
 
-        } catch (IOException e){
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return uploadFileResponseDto;

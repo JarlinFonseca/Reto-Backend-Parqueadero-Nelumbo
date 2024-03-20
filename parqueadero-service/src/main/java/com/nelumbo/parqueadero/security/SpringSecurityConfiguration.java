@@ -47,7 +47,7 @@ public class SpringSecurityConfiguration {
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
                 .authorizeRequests()
-                .antMatchers( "/s3/list","/s3/upload","/download/excel","/exportar-excel","/api/v1/usuario/registrar","/swagger-ui/**", "/swagger-resources/**","/v3/api-docs/**", "/v2/api-docs/**").permitAll()
+                .antMatchers( "/s3/list","/s3/upload","/download/excel","/api/v1/usuario/registrar","/swagger-ui/**", "/swagger-resources/**","/v3/api-docs/**", "/v2/api-docs/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

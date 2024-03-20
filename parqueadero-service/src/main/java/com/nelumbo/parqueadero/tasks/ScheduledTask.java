@@ -1,22 +1,25 @@
 package com.nelumbo.parqueadero.tasks;
 
-import com.nelumbo.parqueadero.dto.response.*;
+import com.nelumbo.parqueadero.dto.response.ExcelResponseDto;
+import com.nelumbo.parqueadero.dto.response.ReporteResponseDto;
+import com.nelumbo.parqueadero.dto.response.UploadFileResponseDto;
 import com.nelumbo.parqueadero.entities.Reporte;
 import com.nelumbo.parqueadero.entities.Usuario;
+import com.nelumbo.parqueadero.exception.ExcelErrorException;
 import com.nelumbo.parqueadero.repositories.ReporteRepository;
 import com.nelumbo.parqueadero.repositories.UsuarioRepository;
-import com.nelumbo.parqueadero.services.*;
+import com.nelumbo.parqueadero.services.IAWSS3Service;
+import com.nelumbo.parqueadero.services.IExcelService;
+import com.nelumbo.parqueadero.services.IReporteService;
+import com.nelumbo.parqueadero.services.IToken;
 import com.nelumbo.parqueadero.utils.FechaUtils;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicLong;
@@ -32,20 +35,17 @@ public class ScheduledTask {
     private final UsuarioRepository usuarioRepository;
     private final IToken token;
     private final FechaUtils fechaUtils;
-   private static final AtomicLong contador = new AtomicLong(0);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTask.class);
+    private static final AtomicLong contador = new AtomicLong(0);
 
-    @Scheduled(fixedRate = 30000) // Ejecutar cada 5 minutos
+    @Scheduled(fixedRate = 300000) // Ejecutar cada 5 minutos
     public void processColaSolicitudes() {
-        Queue<CompletableFuture<ReporteResponse2Dto>> colaSolicitudes = reporteService.getColaSolicitudes();
-        Map<Long, CompletableFuture<ReporteResponse2Dto>> mapaSolicitudes = new HashMap<>();
-       // AtomicLong contador = new AtomicLong(0);
+        Queue<CompletableFuture<ReporteResponseDto>> colaSolicitudes = reporteService.getColaSolicitudes();
         // Procesar hasta 2 solicitudes en paralelo
         for (int i = 0; i < 2; i++) {
-            CompletableFuture<ReporteResponse2Dto> future = colaSolicitudes.poll();
+            CompletableFuture<ReporteResponseDto> future = colaSolicitudes.poll();
             if (future != null) {
-                //PROBAR
                 long identificador = contador.getAndIncrement();
-                mapaSolicitudes.put(identificador, future);
 
                 future.thenAccept(reporteResponseDto -> {
                     try {
@@ -61,13 +61,13 @@ public class ScheduledTask {
 
                         if (excelResponseDtoCompletableFuture != null) {
                             excelResponseDtoCompletableFuture.thenAccept(excelResponse -> {
-                               UploadFileResponseDto uploadFileResponseDto= awss3Service.uploadFileExcel(excelResponse.getArchivo());
+                                UploadFileResponseDto uploadFileResponseDto = awss3Service.uploadFileExcel(excelResponse.getArchivo());
 
                                 Reporte reporte = new Reporte();
                                 reporte.setArchivoNombre(uploadFileResponseDto.getNombreArchivo());
                                 reporte.setFechaCreado(fechaUtils.convertirFechaUtcToColombia(awss3Service.getObjectUploadDate(uploadFileResponseDto.getNombreArchivo())));
-                                reporte.setFechaGuardado(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                                reporte.setIncrementador(contador.getAndIncrement());
+                                reporte.setFechaSolicitud(reporteResponseDto.getFechaSolicitud());
+                                reporte.setIncrementador(identificador);
 
 
                                 String tokenJwt = reporteResponseDto.getTokenJwt();
@@ -82,27 +82,15 @@ public class ScheduledTask {
                         }
 
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new ExcelErrorException();
                     }
 
-
-                    System.out.println("Reporte generado: " + reporteResponseDto);
+                    LOGGER.info("Reporte generado {}", reporteResponseDto);
                 });
             } else {
                 break; // Si no hay más solicitudes en la cola, sal del bucle
             }
         }
-        //PROBAR
-        // Esperar a que todas las solicitudes se completen
-        CompletableFuture<Void> todasLasSolicitudes = CompletableFuture.allOf(mapaSolicitudes.values().toArray(new CompletableFuture[0]));
-
-        todasLasSolicitudes.thenRun(() -> {
-            // Encontrar la última solicitud
-            Long ultimoIdentificador = mapaSolicitudes.keySet().stream().max(Long::compare).orElse(null);
-            CompletableFuture<ReporteResponse2Dto> ultimaSolicitud = mapaSolicitudes.get(ultimoIdentificador);
-            // Realizar acciones adicionales con la última solicitud...
-        });
-
     }
 }
 

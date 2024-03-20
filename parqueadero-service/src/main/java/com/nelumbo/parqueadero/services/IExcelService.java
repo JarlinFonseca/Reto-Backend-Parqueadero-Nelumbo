@@ -8,15 +8,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface IExcelService {
-    void generarArchivoExcel(List<String> datos, String rutaArchivo) throws IOException;
-
-    @Async("asyncExecutor")
-    CompletableFuture<ExcelResponseDto> generarExcelReporte(List<VehiculoParqueadoResponseDto> indicadorVehiculoParqueadoPrimeraVez,
-                                                            List<IndicadorVehiculosMasVecesRegistradoDiferentesParqueaderosDto> indicadorVehiculosMasVecesRegistradosDiferentesParqueaderos,
-                                                            List<IndicadorVehiculosMasVecesRegistradoResponseDto> indicadorVehiculosMasVecesRegistrado,
-                                                            List<VehiculoParqueadoResponseDto> vehiculosPorCoincidencia,
-                                                            GananciasResponseDto indicadorGanancias,
-                                                            String nombreParqueadero, String placa) throws IOException;
 
     @Async("asyncExecutor")
     CompletableFuture<ExcelResponseDto> generarExcelReporteBytes(List<VehiculoParqueadoResponseDto> indicadorVehiculoParqueadoPrimeraVez,

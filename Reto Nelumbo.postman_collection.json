@@ -122,12 +122,12 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcwOTMzNTMwMSwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.ylyyXWBfw9F3GqP7_7QwftazRGeA6XF3pEYFpkPNL2KlCgumKJajKzHZ21DtC38a",
+										"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDk3MDA3NiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.mx-vjErUAE4UPAi1ZP2sX9TAP1jX2KrAqXrXORRukMtT6X1o32I90o6qX7WbV2Hd",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/indicadores/vehiculos/DM/coincidencias",
+									"raw": "http://localhost:8081/api/v1/indicadores/vehiculos/U/coincidencias",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -138,7 +138,7 @@
 										"v1",
 										"indicadores",
 										"vehiculos",
-										"DM",
+										"U",
 										"coincidencias"
 									]
 								}
@@ -925,460 +925,245 @@
 			]
 		},
 		{
-			"name": "Generar excel",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDU1MzUzNCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.PDOjoXOY5KXcwR7myYeaRLqAqDToEzpy_oy0swLOVT4huuC5pS187sGtr8nf3sA2",
-							"type": "string"
+			"name": "REPORTES",
+			"item": [
+				{
+					"name": "Generar reporte",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDk3MDA3NiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.mx-vjErUAE4UPAi1ZP2sX9TAP1jX2KrAqXrXORRukMtT6X1o32I90o6qX7WbV2Hd",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/reportes/parqueaderos/7/vehiculos/placa/U",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"reportes",
+								"parqueaderos",
+								"7",
+								"vehiculos",
+								"placa",
+								"U"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/exportar-excel?format=xlsx",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"exportar-excel"
-					],
-					"query": [
-						{
-							"key": "format",
-							"value": "xlsx"
+				{
+					"name": "Descargar ultimo reporte",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDk3MDA3NiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.mx-vjErUAE4UPAi1ZP2sX9TAP1jX2KrAqXrXORRukMtT6X1o32I90o6qX7WbV2Hd",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/reportes/ultimo-reporte",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"reportes",
+								"ultimo-reporte"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener fecha de la ultima solicitud del reporte",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDk3MDA3NiwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.mx-vjErUAE4UPAi1ZP2sX9TAP1jX2KrAqXrXORRukMtT6X1o32I90o6qX7WbV2Hd",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/reportes/solicitudes/fecha",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"reportes",
+								"solicitudes",
+								"fecha"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Generar reporte",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc5MTkyNSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.guGvCbDTUucjK5Q1i1KNAUaS-CqFJs_uxIab36K6pQ750HQrLjhFYW-y43LSOsQK",
-							"type": "string"
+			"name": "AWS",
+			"item": [
+				{
+					"name": "S3 Upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/BackDev/Desktop/Reto-Backend-Parqueadero-Nelumbo/parqueadero-service/reporte229674557.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/v1/s3/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"s3",
+								"upload"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/exportar/parqueaderos/7/vehiculos/D",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"exportar",
-						"parqueaderos",
-						"7",
-						"vehiculos",
-						"D"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Generar reporte Vprincipal",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDc5MTkyNSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.guGvCbDTUucjK5Q1i1KNAUaS-CqFJs_uxIab36K6pQ750HQrLjhFYW-y43LSOsQK",
-							"type": "string"
+				{
+					"name": "S3 list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/s3/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"s3",
+								"list"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/exportar/parqueaderos/7/vehiculos/placa/DM",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"exportar",
-						"parqueaderos",
-						"7",
-						"vehiculos",
-						"placa",
-						"DM"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Generar reporte Vprincipal ASYNC",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDg3NzkyNCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.Ev8hbxA6-47lVzTXFVc7NicJJQ4654Vpn_sXw2Wv8UZxooBxa64GIcWMAWF2fGX4",
-							"type": "string"
+				{
+					"name": "S3 get date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwNzgzMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.XoxxoMfP265FLmB3NNewTkris6JFD_nmt_4r7BCnG1r5eJTtdhd3wEcoVnFz8mnB",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/s3/date?key=ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"s3",
+								"date"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx"
+								}
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/generar/parqueaderos/7/vehiculos/placa/D",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"generar",
-						"parqueaderos",
-						"7",
-						"vehiculos",
-						"placa",
-						"D"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Generar reporte Vprincipal ASYNC Copy",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
-							"type": "string"
+				{
+					"name": "S3 download",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDg4NTQwNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.uFEAa9Ci6w3KDuu3Za2Q9mzf5mvgP6kzA6GJWfowS9iHyFvGGjODczgs74pm23gh",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/v1/s3/download?key=1710868610014_reporte.xlsx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"v1",
+								"s3",
+								"download"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "1710868610014_reporte.xlsx"
+								}
+							]
 						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/generar2/parqueaderos/7/vehiculos/placa/DM",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"generar2",
-						"parqueaderos",
-						"7",
-						"vehiculos",
-						"placa",
-						"DM"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Descargar excel",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsImV4cCI6MTcxMDU1MzUzNCwiaWQiOjEsIm5vbWJyZSI6IkFkbWluIiwicm9sIjoiQURNSU4ifQ.PDOjoXOY5KXcwR7myYeaRLqAqDToEzpy_oy0swLOVT4huuC5pS187sGtr8nf3sA2",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/download/excel",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"download",
-						"excel"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNzczMSwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.eNRowjaAHwFueO_1KIrgVklK-BY3DxRHtoiic6EdmQ9COGgtqicFpQ09p1Rt40Ec",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDgxNTIwOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.ayytx8YIA-piUWmpDsHZ-maTou1zVHgmTVmW_Q4uLSzP-Ww3lDUFDShGzvZYoYP7",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/generar/parqueaderos/7/vehiculos/placa/D",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"generar",
-						"parqueaderos",
-						"7",
-						"vehiculos",
-						"placa",
-						"D"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "S3 Upload",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/C:/Users/BackDev/Desktop/Reto-Backend-Parqueadero-Nelumbo/parqueadero-service/reporte229674557.xlsx"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:8081/api/v1/s3/upload",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"s3",
-						"upload"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "S3 list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/s3/list",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"s3",
-						"list"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "S3 get date",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwNzgzMywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.XoxxoMfP265FLmB3NNewTkris6JFD_nmt_4r7BCnG1r5eJTtdhd3wEcoVnFz8mnB",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/s3/date?key=ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"s3",
-						"date"
-					],
-					"query": [
-						{
-							"key": "key",
-							"value": "ab451e59-81ad-4152-9c58-ed35e5aa63d2361428847_reporte.xlsx"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "S3 download",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDg4NTQwNywiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.uFEAa9Ci6w3KDuu3Za2Q9mzf5mvgP6kzA6GJWfowS9iHyFvGGjODczgs74pm23gh",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/s3/download?key=1710868610014_reporte.xlsx",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"s3",
-						"download"
-					],
-					"query": [
-						{
-							"key": "key",
-							"value": "1710868610014_reporte.xlsx"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Descargar ultimo reporte",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/descargar/ultimo-reporte",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"descargar",
-						"ultimo-reporte"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener fecha de la ultima solicitud del reporte",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImV4cCI6MTcxMDkwOTIzOCwiaWQiOjE2LCJub21icmUiOiJKdWFuIiwicm9sIjoiU09DSU8ifQ.D61NO-2FdUHI-s7fBYoDSf0T82KjIlPC_q3DiuPRxSj4MygZZCZNoHiuj0YxmnzJ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8081/api/v1/reportes/solicitudes/fecha",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8081",
-					"path": [
-						"api",
-						"v1",
-						"reportes",
-						"solicitudes",
-						"fecha"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }

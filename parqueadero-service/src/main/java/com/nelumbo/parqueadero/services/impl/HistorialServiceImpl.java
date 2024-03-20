@@ -5,7 +5,6 @@ import com.nelumbo.parqueadero.dto.response.VehiculoParqueadoResponseDto;
 import com.nelumbo.parqueadero.entities.Historial;
 import com.nelumbo.parqueadero.entities.Vehiculo;
 import com.nelumbo.parqueadero.exception.NoEsSocioDelParqueaderoException;
-import com.nelumbo.parqueadero.exception.NoExistenVehiculosRegistradosPorPrimeraVez;
 import com.nelumbo.parqueadero.exception.ParqueaderoNoExisteException;
 import com.nelumbo.parqueadero.exception.UsuarioSocioNoAutenticadoException;
 import com.nelumbo.parqueadero.repositories.HistorialRepository;

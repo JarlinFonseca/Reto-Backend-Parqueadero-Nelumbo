@@ -11,13 +11,13 @@ public interface ReporteRepository extends JpaRepository<Reporte, Long> {
 
     @Query(nativeQuery = true, value = "select r.archivo_nombre from reportes r "+
             "where r.usuario_id = :usuarioId " +
-            "order by r.fecha_creado desc, r.fecha_guardado desc, r.incrementador desc " +
+            "order by r.fecha_creado desc, r.fecha_solicitud desc, r.incrementador desc " +
             "limit 1")
     Optional<String> findUltimoReporteNombreArchivoPorUsuarioId(Long usuarioId);
 
-    @Query(nativeQuery = true, value = "select r.fecha_guardado from reportes r "+
+    @Query(nativeQuery = true, value = "select r.fecha_solicitud from reportes r "+
             "where r.usuario_id = :usuarioId " +
-            "order by r.fecha_creado desc, r.fecha_guardado desc, r.incrementador desc " +
+            "order by r.fecha_creado desc, r.fecha_solicitud desc, r.incrementador desc " +
             "limit 1")
     Optional<Date> findFechaGuardadoUltimoReportePorUsuarioId(Long usuarioId);
 }
